@@ -31,14 +31,14 @@ function _print_msg_formater() {
   local MSG=${2}
 
 
-  if [ "${MSG_TYPE}" == "BASE" ]; then
-      MSG_TYPE=${NTSI_MSG_BASE}
-  elif [ "${MSG_TYPE}" == "DONE" ]; then
-      MSG_TYPE=${NTSI_MSG_DONE}
-  elif [ "${MSG_TYPE}" == "WARNING" ]; then
-    MSG_TYPE=${NTSI_MSG_WARNING}
-  elif [ "${MSG_TYPE}" == "AWAITING_INPUT" ]; then
-    MSG_TYPE=${NTSI_MSG_AWAITING_INPUT}
+  if [[ "${MSG_TYPE}" == "BASE" ]]; then
+      MSG_TYPE=${MSG_BASE}
+  elif [[ "${MSG_TYPE}" == "DONE" ]]; then
+      MSG_TYPE=${MSG_DONE}
+  elif [[ "${MSG_TYPE}" == "WARNING" ]]; then
+    MSG_TYPE=${MSG_WARNING}
+  elif [[ "${MSG_TYPE}" == "AWAITING_INPUT" ]]; then
+    MSG_TYPE=${MSG_AWAITING_INPUT}
   else
     echo "from ${FUNCNAME[1]} › ${FUNCNAME[0]}: Unrecognized msg type '${MSG_TYPE}' (!)"
     exit 1
@@ -85,7 +85,7 @@ function print_msg_error_and_exit() {
   local ERROR_MSG=$1
 
   echo ""
-  echo -e "${NTSI_MSG_ERROR}: ${ERROR_MSG}" >&2
+  echo -e "${MSG_ERROR}: ${ERROR_MSG}" >&2
   echo "Exiting now."
   echo ""
   cd "${TMP_CWD}"
@@ -131,7 +131,7 @@ function print_formated_script_header() {
   local SYMBOL="${2:-=}"
   echo
   draw_horizontal_line_across_the_terminal_window "${SYMBOL}"
-  echo -e "Starting ${NTSI_MSG_DIMMED_FORMAT}${SCRIPT_NAME}${NTSI_MSG_END_FORMAT}"
+  echo -e "Starting ${MSG_DIMMED_FORMAT}${SCRIPT_NAME}${MSG_END_FORMAT}"
   echo
 }
 
@@ -155,7 +155,7 @@ function print_formated_back_to_script_msg() {
   local SYMBOL="${2:-=}"
   echo
   draw_horizontal_line_across_the_terminal_window -
-  echo -e "Back to ${NTSI_MSG_DIMMED_FORMAT}configure_teamcity_server.bash${NTSI_MSG_END_FORMAT}"
+  echo -e "Back to ${MSG_DIMMED_FORMAT}configure_teamcity_server.bash${MSG_END_FORMAT}"
   echo
 }
 
@@ -177,7 +177,7 @@ function print_formated_back_to_script_msg() {
 function print_formated_file_preview_begin() {
   local FILE_NAME="${1}"
   echo
-  echo -e "${NTSI_MSG_DIMMED_FORMAT}"
+  echo -e "${MSG_DIMMED_FORMAT}"
   draw_horizontal_line_across_the_terminal_window .
   echo "${FILE_NAME} <<< EOF"
 }
@@ -185,6 +185,6 @@ function print_formated_file_preview_begin() {
 function print_formated_file_preview_end() {
   echo "EOF"
   draw_horizontal_line_across_the_terminal_window .
-  echo -e "${NTSI_MSG_END_FORMAT}"
+  echo -e "${MSG_END_FORMAT}"
   echo
 }

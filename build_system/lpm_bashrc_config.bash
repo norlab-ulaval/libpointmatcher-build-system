@@ -22,7 +22,7 @@ if [[ "$(basename $(pwd))" != "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}" ]]; then
 elif [[ "$(basename $(pwd))" == "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}" ]]; then
   LPM_PATH=$(pwd)
 else
-  print_msg_error_and_exit "Can't find directory ${NTSI_MSG_DIMMED_FORMAT}${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${NTSI_MSG_END_FORMAT}"
+  print_msg_error_and_exit "Can't find directory ${MSG_DIMMED_FORMAT}${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
 fi
 
 # ====Begin========================================================================================================

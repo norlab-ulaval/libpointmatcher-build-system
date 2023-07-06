@@ -6,12 +6,25 @@
 #   $ docker run -a --name iAmTestLibpointmatcherDependenciesContainer -t -i test-libpointmatcher-dependencies:ubuntu.20.04
 #
 set -e
+#set -v
+
+# ....Project root logic...........................................................................................
+TMP_CWD=$(pwd)
+
+echo
+echo "cwd is '$(pwd)'" # ToDo: on task end >> delete this line ←
+
+if [[ "$(basename $(pwd))" != "build_system" ]]; then
+  echo "cwd != build_system" # ToDo: on task end >> delete this line ←
+  cd ..
+  echo "Change cwd to  '$(pwd)'" # ToDo: on task end >> delete this line ←
+fi
 
 
 # ....Load environment variables from file.........................................................................
 set -o allexport
-source ../.env
-source ../.env.prompt
+source ./.env
+source ./.env.prompt
 set +o allexport
 
 # skip GUI dialog by setting everything to default
@@ -20,9 +33,6 @@ export DEBIAN_FRONTEND=noninteractive
 # ....Helper function..............................................................................................
 # import shell functions from Libpointmatcher-build-system utilities library
 source ./function_library/prompt_utilities.bash
-
-# ....Project root logic...........................................................................................
-TMP_CWD=$(pwd)
 
 # ====Begin========================================================================================================
 print_formated_script_header 'lpm_install_dependencies_ubuntu.bash' =
@@ -53,13 +63,15 @@ sudo apt-get update &&
     ca-certificates &&
   sudo rm -rf /var/lib/apt/lists/*
 
-sudo apt-get update &&
-  sudo apt-get install --assume-yes \
-    python3-dev \
-    python3-pip &&
-  sudo rm -rf /var/lib/apt/lists/*
+#sudo apt-get update &&
+#  sudo apt-get install --assume-yes \
+#    python3-dev \
+#    python3-pip &&
+#  sudo rm -rf /var/lib/apt/lists/*
+#
+#python3 -m pip install --upgrade pip
 
-python3 -m pip install --upgrade pip
+source ./ubuntu/lpm_install_python_dev_tools.bash
 
 ## ToDo: assessment >> check if next bloc ↓↓ is needed
 #sudo apt-get update \

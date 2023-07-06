@@ -100,7 +100,7 @@ sudo apt-get update &&
     libyaml-cpp-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-if [ ${GENERATE_API_DOC_FLAG} == 'TRUE' ]; then
+if [[ ${GENERATE_API_DOC_FLAG} == 'TRUE' ]]; then
   sudo apt-get update &&
     sudo apt-get install --assume-yes \
       doxygen \
@@ -112,7 +112,7 @@ fi
 print_msg "Install Libpointmatcher"
 # https://github.com/ethz-asl/libpointmatcher/tree/master
 
-if [ ${BUILD_SYSTEM_INSTALL} == 'FALSE' ]; then
+if [[ ${BUILD_SYSTEM_INSTALL} == 'FALSE' ]]; then
   #git clone https://github.com/ethz-asl/libpointmatcher.git
   git clone https://github.com/"${LPM_LIBPOINTMATCHER_SRC_DOMAIN}"/"${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}".git
   #   && git checkout 1.3.1

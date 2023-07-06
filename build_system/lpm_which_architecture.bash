@@ -24,11 +24,12 @@ source ./function_library/prompt_utilities.bash
 # ====Begin========================================================================================================
 print_formated_script_header 'lpm_which_architecture.bash' .
 
+
 if [[ $(uname -m) == "aarch64" ]]; then
   if [[ -n $(uname -r | grep tegra) ]]; then
     export LPM_IMAGE_ARCHITECTURE='arm64-l4t'
   else
-    echo -e "${LPM_MSG_ERROR} Unsupported OS for aarch64 processor"
+    echo -e "${MSG_ERROR} Unsupported OS for aarch64 processor"
   fi
 elif [[ $(uname -m) == "arm64" ]]; then
   if [[ $(uname) == "Darwin" ]]; then
@@ -42,6 +43,6 @@ else
   print_msg_error_and_exit "Unsupported processor architecture"
 fi
 
-print_msg_done "Which LPM_IMAGE_ARCHITECTURE env? ${LPM_IMAGE_ARCHITECTURE}"
+print_msg "Setting LPM_IMAGE_ARCHITECTURE=${LPM_IMAGE_ARCHITECTURE}"
 draw_horizontal_line_across_the_terminal_window .
 # ====Done=========================================================================================================
