@@ -1,9 +1,19 @@
 #!/bin/bash
 #
+# Library of function related to console formatting
+#
+# Requirement: This script must be executed from directory 'build_system'
+#
 # Usage:
 #   $ source ./function_library/prompt_utilities.bash
 #
 set -e
+
+# ....Pre-condition................................................................................................
+if [[ "$(basename $(pwd))" != "build_system" ]]; then
+  echo -e "\nERROR: This script must be executed from directory 'build_system'!\n cwd: $(pwd)"
+  exit 1
+fi
 
 # ....Load environment variables from file.........................................................................
 set -o allexport

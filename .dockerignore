@@ -15,5 +15,3 @@ visual/*
 .run/*
 
 # Files
-**/docker-compose.*
-**/Dockerfile.*

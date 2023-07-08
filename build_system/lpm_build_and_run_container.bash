@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 #
 # Build and run a single container based on docker compose docker-compose.libpointmatcher.build.yaml
 #
@@ -6,13 +6,12 @@
 #   $ bash lpm_build_and_run_container.bash [<optional flag>] [-- <any docker cmd+arg>]
 #
 # Arguments:
-#   [--libpointmatcher-version="latest"]     The libpointmatcher release tag (default: see LPM_VERSION)
-#   [--os-name="ubuntu"]                     The operating system name. Either 'ubuntu' or 'osx' (default: see OS_NAME)
-#   [--os-version="jammy"]                  Name named operating system version, see .env for supported version (default: see OS_VERSION)
-#   [-- <any docker cmd+arg>]       Any argument passed after '--' will be passed to docker compose as docker command and arguments
-#                                   (default: see DOCKER_COMPOSE_CMD_ARGS)
-#   [-h, --help]                    Get help
-#   [--debug-docker]                BUILDKIT_PROGRESS=plain
+#   [--libpointmatcher-version latest]    The libpointmatcher release tag (default: see LPM_VERSION)
+#   [--os-name ubuntu]                    The operating system name. Either 'ubuntu' or 'osx' (default: see OS_NAME)
+#   [--os-version jammy]                  Name named operating system version, see .env for supported version (default: see OS_VERSION)
+#   [-- <any docker cmd+arg>]             Any argument passed after '--' will be passed to docker compose as docker command and arguments
+#                                         (default: see DOCKER_COMPOSE_CMD_ARGS)
+#   [-h, --help]                          Get help
 #
 set -e
 #set -v
@@ -36,58 +35,64 @@ set +o allexport
 # ....Helper function..............................................................................................
 # import shell functions from Libpointmatcher-build-system utilities library
 source ./function_library/prompt_utilities.bash
+source ./function_library/general_utilities.bash
 
 function print_help_in_terminal() {
-  echo -e "\$ ${0} [<optional flag>] [<any other flag>]"
-  echo ""
-  echo -e "    \033[1m<optional argument>:\033[0m"
-  echo "      --libpointmatcher-version=\"latest\"     The libpointmatcher release tag (default to latest 'latest')"
-  echo "      --os-name=\"ubuntu\"                     The operating system name. Either 'ubuntu' or 'osx' (default to 'ubuntu')"
-  echo "      --os-version=\"jammy\"                  Name named operating system version, see .env for supported version (default to 'jammy')"
-  echo "      [-- <any docker cmd+arg>]     Any argument passed after '--' will be passed to docker compose as docker command and arguments (default to '${DOCKER_COMPOSE_CMD_ARGS}')"
-  echo "      -h, --help                    Get help"
-  echo "      --debug-docker                Set BUILDKIT_PROGRESS=plain"
-  echo ""
+  echo -e "\n
+\$ ${0} [<optional flag>] [-- <any docker cmd+arg>]
+  \033[1m
+    <optional argument>:\033[0m
+      -h, --help                              Get help
+      --libpointmatcher-version latest        The libpointmatcher release tag (default to latest 'latest')
+      --os-name ubuntu                        The operating system name. Either 'ubuntu' or 'osx' (default to 'ubuntu')
+      --os-version jammy                      Name named operating system version, see .env for supported version
+                                              (default to 'jammy')
+  \033[1m
+    [-- <any docker cmd+arg>]\033[0m                 Any argument passed after '--' will be passed to docker compose as docker
+                                              command and arguments (default to '${DOCKER_COMPOSE_CMD_ARGS}')
+"
 }
 
 # ....Pass parameters..............................................................................................
 
 
 # ....Script command line flags....................................................................................
-## todo: on task end >> comment next dev bloc ↓↓
-#echo "${0}: all arg >>" \
-#  && echo "${@}"
+echo -e "${0}: all arg >> ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+echo
 
-for arg in "$@"; do
-  case $arg in
-  # (Priority) ToDo: fixme!!
+#for arg in "$@"; do
+while [ $# -gt 0 ]; do
+  echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+  echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
+
+  case $1 in
   --libpointmatcher-version)
-    LPM_VERSION="${arg}"
-    shift
+    echo "got --libpointmatcher-version" # ToDo: on task end >> delete this line ←
+    LPM_VERSION="${2}"
+    shift # Remove argument (--libpointmatcher-version)
+    shift # Remove argument value
     ;;
-  # (Priority) ToDo: fixme!!
   --os-name)
-    OS_NAME="${arg}"
-    shift
+    echo "got --os-name" # ToDo: on task end >> delete this line ←
+    OS_NAME="${2}"
+    shift # Remove argument (--os-name)
+    shift # Remove argument value
     ;;
-  # (Priority) ToDo: fixme!!
   --os-version)
-    OS_VERSION="${arg}"
-    shift
+    echo "got --os-version" # ToDo: on task end >> delete this line ←
+    OS_VERSION="${2}"
+    shift # Remove argument (--os-version)
+    shift # Remove argument value
     ;;
-  # (Priority) ToDo: fixme!!
-#  --debug-docker)
-#    export BUILDKIT_PROGRESS=plain
-#    shift
-#    ;;
   -h | --help)
     print_help_in_terminal
     exit
     ;;
   --) # no more option
     shift
-#    DOCKER_COMPOSE_CMD_ARGS="${arg}"
-    DOCKER_COMPOSE_CMD_ARGS="${@}"
+    echo -e "'\$*' after (and break): ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+    DOCKER_COMPOSE_CMD_ARGS="$*"
     break
     ;;
   *) # Default case
@@ -95,15 +100,31 @@ for arg in "$@"; do
     ;;
   esac
 
-  shift
+  echo -e "'\$*' after: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+  echo -e "after \$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+  echo
+
 done
+
+echo -e "'\$*' on DONE: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+
+# ToDo: on task end >> delete next bloc ↓↓
+echo -e "
+${MSG_DIMMED_FORMAT}
+LPM_VERSION=${LPM_VERSION}
+OS_NAME=${OS_NAME}
+OS_VERSION=${OS_VERSION}
+DOCKER_COMPOSE_CMD_ARGS=${DOCKER_COMPOSE_CMD_ARGS}
+${MSG_END_FORMAT}
+"
+
 
 # ====Begin========================================================================================================
 print_formated_script_header 'lpm_build_and_run_container.bash' =
 
 # ..................................................................................................................
 # Set environment variable LPM_IMAGE_ARCHITECTURE
-source ./lpm_which_architecture.bash
+source ./lpm_utility_script/lpm_which_architecture.bash
 
 # ..................................................................................................................
 print_msg "Build images specified in 'docker-compose.libpointmatcher.build.yaml'"
@@ -125,21 +146,15 @@ print_msg "Environment variables set for this build run:\n${MSG_DIMMED_FORMAT}$(
 ## docker compose build [OPTIONS] [SERVICE...]
 ## docker compose run [OPTIONS] SERVICE [COMMAND] [ARGS...]
 
-# ////DEV TEST: $ Docker compose////////////////////////////////////////////////////////////////////////////////////
-FULL_DOCKER_COMMAND="compose -f docker-compose.libpointmatcher.build.yaml ${DOCKER_COMPOSE_CMD_ARGS}"
-print_msg "Execute ${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT}"
-
-# shellcheck disable=SC2086
-docker ${FULL_DOCKER_COMMAND}
-
-print_msg_done "${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT}"
-
-## ////DEV TEST: $ Docker build//////////////////////////////////////////////////////////////////////////////////////
-#print_msg "Execute TEST ${MSG_DIMMED_FORMAT}$ docker build -f ubuntu/Dockerfile.dependencies -t ${LPM_IMAGE_TAG} . ${MSG_END_FORMAT}"
-#docker build -f ubuntu/Dockerfile.dependencies -t "${LPM_IMAGE_TAG}" .
+print_msg_warning "cwd › $(pwd)" # ToDo: on task end >> delete this line ←
+tree -L 1
+echo -e "DOCKER_COMPOSE_CMD_ARGS › ${MSG_DIMMED_FORMAT}${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
 
 
+show_and_execute_docker "compose -f docker-compose.libpointmatcher.build.yaml ${DOCKER_COMPOSE_CMD_ARGS}"
 
+echo
+print_msg "Exit $0"
 draw_horizontal_line_across_the_terminal_window =
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

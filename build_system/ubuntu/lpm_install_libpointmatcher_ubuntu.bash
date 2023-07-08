@@ -52,20 +52,30 @@ BUILD_TESTS_FLAG=FALSE
 GENERATE_API_DOC_FLAG=FALSE
 BUILD_SYSTEM_INSTALL=FALSE
 
-for arg in "$@"; do
+#for arg in "$@"; do
+while [ $# -gt 0 ]; do
+
+  echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+  echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
+
+
   case $arg in
   -h | --help)
     print_help_in_terminal
     exit
     ;;
+  # ToDo: unit-test
   --compile-test)
     BUILD_TESTS_FLAG=TRUE
     shift
     ;;
+  # ToDo: unit-test
   --generate-doc)
     GENERATE_API_DOC_FLAG=TRUE
     shift
     ;;
+  # ToDo: unit-test
   --build-system-install)
     BUILD_SYSTEM_INSTALL=TRUE
     shift
@@ -82,8 +92,23 @@ for arg in "$@"; do
     ;;
   esac
 
-  shift
+
+  echo -e "'\$*' after: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+  echo -e "after \$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+  echo
+
 done
+
+echo -e "'\$*' on DONE: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+
+# ToDo: on task end >> delete next bloc ↓↓
+echo -e "
+${MSG_DIMMED_FORMAT}
+BUILD_TESTS_FLAG=${BUILD_TESTS_FLAG}
+GENERATE_API_DOC_FLAG=${GENERATE_API_DOC_FLAG}
+BUILD_SYSTEM_INSTALL=${BUILD_SYSTEM_INSTALL}
+${MSG_END_FORMAT}
+"
 
 
 # ................................................................................................................

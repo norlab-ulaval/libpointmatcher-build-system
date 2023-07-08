@@ -11,13 +11,8 @@ set -e
 # ....Project root logic...........................................................................................
 TMP_CWD=$(pwd)
 
-echo
-echo "cwd is '$(pwd)'" # ToDo: on task end >> delete this line ←
-
 if [[ "$(basename $(pwd))" != "build_system" ]]; then
-  echo "cwd != build_system" # ToDo: on task end >> delete this line ←
-  cd ..
-  echo "Change cwd to  '$(pwd)'" # ToDo: on task end >> delete this line ←
+  cd ../
 fi
 
 
