@@ -86,6 +86,6 @@ sudo usermod -a -G docker "$(whoami)"
 
 print_msg "${NTSI_ADMIN_USER} added to docker group"
 
-
+print_formated_script_footer 'lpm_install_docker_tools.bash'
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

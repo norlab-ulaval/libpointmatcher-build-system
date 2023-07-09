@@ -30,5 +30,6 @@ RUN chmod +x lpm_execute_unittest.bash
 
 RUN bash lpm_install_libpointmatcher_ubuntu.bash --compile-test --generate-doc
 
-ENTRYPOINT [ "./lpm_entrypoint_execute_unittest.bash" ]
+#ENTRYPOINT [ "./entrypoint_execute_lpm_unittest.bash" ]
+ENTRYPOINT [ "./entrypoint.bash" ]
 CMD [ "bash" ]

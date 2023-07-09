@@ -43,10 +43,8 @@ TMP_CWD=$(pwd)
 print_formated_script_header 'lpm_install_libpointmatcher_ubuntu.bash' =
 
 
+
 # ....Script command line flags....................................................................................
-## todo: on task end >> comment next dev bloc ↓↓
-#echo "${0}: all arg >>" \
-#  && echo "${@}"
 
 BUILD_TESTS_FLAG=FALSE
 GENERATE_API_DOC_FLAG=FALSE
@@ -57,10 +55,10 @@ while [ $# -gt 0 ]; do
 
   echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
   echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
-  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
+#  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
 
 
-  case $arg in
+  case $1 in
   -h | --help)
     print_help_in_terminal
     exit
@@ -156,6 +154,6 @@ make -j $(nproc)
 sudo make install
 
 print_msg_done "Libpointmatcher installed"
-draw_horizontal_line_across_the_terminal_window =
+print_formated_script_footer 'lpm_install_libpointmatcher_ubuntu.bash' =
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

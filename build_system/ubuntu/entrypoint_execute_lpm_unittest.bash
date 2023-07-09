@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Usage:
-#   $ bash lpm_entrypoint_execute_unittest.bash [<any>]
+#   $ bash entrypoint_execute_lpm_unittest.bash [<any>]
 #
 # Parameter
 #   <any> (Optional) Everything passed here will be executed at the end of this script

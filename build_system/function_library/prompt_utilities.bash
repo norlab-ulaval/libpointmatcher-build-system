@@ -123,10 +123,11 @@ function draw_horizontal_line_across_the_terminal_window() {
 }
 
 # =================================================================================================================
-# Print a formated script header
+# Print a formatted script header or footer
 #
 # Usage:
 #   $ print_formated_script_header "<script name>" [<SYMBOL>]
+#   $ print_formated_script_footer "<script name>" [<SYMBOL>]
 #
 # Arguments:
 #   <script name>   The name of the script that is executing the function. Will be print in the header
@@ -142,6 +143,15 @@ function print_formated_script_header() {
   echo
   draw_horizontal_line_across_the_terminal_window "${SYMBOL}"
   echo -e "Starting ${MSG_DIMMED_FORMAT}${SCRIPT_NAME}${MSG_END_FORMAT}"
+  echo
+}
+
+function print_formated_script_footer() {
+  local SCRIPT_NAME="${1}"
+  local SYMBOL="${2:-=}"
+  echo
+  echo -e "Completed ${MSG_DIMMED_FORMAT}${SCRIPT_NAME}${MSG_END_FORMAT}"
+  draw_horizontal_line_across_the_terminal_window "${SYMBOL}"
   echo
 }
 
@@ -170,7 +180,7 @@ function print_formated_back_to_script_msg() {
 }
 
 # =================================================================================================================
-# Print formated file preview
+# Print formatted file preview
 #
 # Usage:
 #   $ print_formated_file_preview_begin "<file name>"
@@ -198,3 +208,4 @@ function print_formated_file_preview_end() {
   echo -e "${MSG_END_FORMAT}"
   echo
 }
+

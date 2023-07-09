@@ -8,14 +8,21 @@
 #   $ bash ./[build_system/[test/]]test_build_and_run_IamBuildSystemTester.bash [<cmd+arg appended to docker run tail>]
 #
 set -e
+#set -v
+#set -x
 
 DOCKER_CMD_ARGS=${*}
+
+clear
+
+TMP_CWD=$(pwd)
 
 # ....Helper function..............................................................................................
 if [[ "$(basename $(pwd))" == "test" ]]; then
   cd ../
 fi
 
+source ./function_library/prompt_utilities.bash
 source ./function_library/general_utilities.bash
 
 # ....Project root logic...........................................................................................
@@ -32,6 +39,9 @@ fi
 #fi
 
 
+# ====Begin========================================================================================================
+print_formated_script_header 'test_build_and_run_IamBuildSystemTester.bash' '/'
+
 # ....Build image..................................................................................................
 echo
 print_msg "Building 'lpm.ubuntu20.buildsystem.test'"
@@ -47,3 +57,7 @@ if [[ -n ${DOCKER_CMD_ARGS} ]]; then
 fi
 
 show_and_execute_docker "run --name IamBuildSystemTester -t -i --rm lpm.ubuntu20.buildsystem.test ${DOCKER_CMD_ARGS}"
+
+print_formated_script_footer 'test_build_and_run_IamBuildSystemTester.bash' '/'
+# ====Teardown=====================================================================================================
+cd "${TMP_CWD}"

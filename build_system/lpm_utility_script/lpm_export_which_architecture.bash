@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Tools to set the LPM_IMAGE_ARCHITECTURE environment variable with the host architecture and OS type.
+# Tools to export the LPM_IMAGE_ARCHITECTURE environment variable with the host architecture and OS type.
 #
 # LPM_IMAGE_ARCHITECTURE will be exported either as 'arm64-l4t', 'arm64-darwin', 'arm64-linux' or 'x86-linux'
 # depending on which architecture and OS type the script is running:
@@ -8,7 +8,7 @@
 #   - OS: Linux, Darwin, Window
 #
 # Usage;
-#   $ bash ./lpm_utility_script/lpm_which_architecture.bash
+#   $ bash ./lpm_utility_script/lpm_export_which_architecture.bash
 #
 set -e
 
@@ -26,7 +26,7 @@ set +o allexport
 source ./function_library/prompt_utilities.bash
 
 # ====Begin========================================================================================================
-print_formated_script_header 'lpm_which_architecture.bash' .
+print_formated_script_header 'lpm_export_which_architecture.bash' .
 
 
 if [[ $(uname -m) == "aarch64" ]]; then
@@ -46,5 +46,5 @@ else
 fi
 
 print_msg "Setting LPM_IMAGE_ARCHITECTURE=${LPM_IMAGE_ARCHITECTURE}"
-draw_horizontal_line_across_the_terminal_window .
+print_formated_script_footer 'lpm_export_which_architecture.bash' .
 # ====Done=========================================================================================================

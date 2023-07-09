@@ -46,15 +46,16 @@ function show_and_execute_docker() {
 #    local MSG_END_FORMAT="\033[0m"
 
     if [ -f /.dockerenv ]; then
+      echo
       print_msg_warning "Skipping the execution of Docker command\n
       ${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT}\n\nsince the script is executed inside a docker container ... and starting Docker daemon inside a container is complicated to setup and overkill for our testing case."
     else
-      print_msg "Execute ${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT}"
+      print_msg "Execute command ${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT}"
 
       # shellcheck disable=SC2086
       docker ${FULL_DOCKER_COMMAND}
 
-      print_msg_done "${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT}"
+      print_msg_done "Command ${MSG_DIMMED_FORMAT}$ docker ${FULL_DOCKER_COMMAND}${MSG_END_FORMAT} completed and exited docker."
     fi
 }
 

@@ -145,7 +145,7 @@ git clone https://github.com/ethz-asl/libnabo.git &&
 #pwd && tree -L 3
 
 print_msg_done "Libpointmatcher dependencies installed"
-draw_horizontal_line_across_the_terminal_window =
+print_formated_script_footer 'lpm_install_dependencies_ubuntu.bash' =
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
 

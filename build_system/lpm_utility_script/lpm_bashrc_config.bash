@@ -44,7 +44,7 @@ fi
 
 print_msg_done "New aliases with prefix 'lpm' added to .bashrc"
 
-draw_horizontal_line_across_the_terminal_window .
+print_formated_script_footer 'lpm_bashrc_config.bash' .
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
 
