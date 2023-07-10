@@ -99,6 +99,11 @@ while [ $# -gt 0 ]; do
     shift # Remove argument (--osx-version-build-matrix-override)
     shift # Remove argument value
     ;;
+  --job-id)
+      LPM_JOB_ID="${2}"
+      shift # Remove argument (--job-id)
+      shift # Remove argument value
+      ;;
   -h | --help)
     print_help_in_terminal
     exit
@@ -118,18 +123,17 @@ while [ $# -gt 0 ]; do
   #  echo
 
 done
-# --libpointmatcher-version-build-matrix-override ('1.3.1') --os-name-build-matrix-override ('osx') --os-version-build-matrix-override ('ventura')
 
-echo -e "'\$*' on DONE: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-
-# ToDo: on task end >> delete next bloc ↓↓
-echo -e " ${MSG_DIMMED_FORMAT}
-LPM_LIBPOINTMATCHER_VERSIONS=${LPM_LIBPOINTMATCHER_VERSIONS[*]}
-LPM_SUPPORTED_OS=${LPM_SUPPORTED_OS[*]}
-LPM_UBUNTU_SUPPORTED_VERSIONS=${LPM_UBUNTU_SUPPORTED_VERSIONS[*]}
-LPM_OSX_SUPPORTED_VERSIONS=${LPM_OSX_SUPPORTED_VERSIONS[*]}
-DOCKER_COMPOSE_CMD_ARGS=${DOCKER_COMPOSE_CMD_ARGS}
-${MSG_END_FORMAT} "
+#echo -e "'\$*' on DONE: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+#
+## ToDo: on task end >> delete next bloc ↓↓
+#echo -e " ${MSG_DIMMED_FORMAT}
+#LPM_LIBPOINTMATCHER_VERSIONS=${LPM_LIBPOINTMATCHER_VERSIONS[*]}
+#LPM_SUPPORTED_OS=${LPM_SUPPORTED_OS[*]}
+#LPM_UBUNTU_SUPPORTED_VERSIONS=${LPM_UBUNTU_SUPPORTED_VERSIONS[*]}
+#LPM_OSX_SUPPORTED_VERSIONS=${LPM_OSX_SUPPORTED_VERSIONS[*]}
+#DOCKER_COMPOSE_CMD_ARGS=${DOCKER_COMPOSE_CMD_ARGS}
+#${MSG_END_FORMAT} "
 
 
 ## ..................................................................................................................
@@ -163,9 +167,12 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
     for EACH_OS_VERSION in "${CRAWL_OS_VERSIONS[@]}"; do
 
+      export LPM_JOB_ID=666
+
       source ./lpm_execute_compose.bash --libpointmatcher-version "${EACH_LPM_VERSION}" \
                                         --os-name "${EACH_OS_NAME}" \
                                         --os-version "${EACH_OS_VERSION}" \
+                                        --job-id "${LPM_JOB_ID}" \
                                         -- "${DOCKER_COMPOSE_CMD_ARGS}"
 
       # Collect image tags exported by lpm_execute_compose.bash

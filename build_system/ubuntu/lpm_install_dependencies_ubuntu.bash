@@ -32,11 +32,6 @@ source ./function_library/prompt_utilities.bash
 # ====Begin========================================================================================================
 print_formated_script_header 'lpm_install_dependencies_ubuntu.bash' =
 
-# ................................................................................................................
-print_msg "Create required dir structure"
-mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
-cd "${LPM_INSTALLED_LIBRARIES_PATH}"
-
 
 # ................................................................................................................
 echo
@@ -46,25 +41,24 @@ echo
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     lsb-release \
+    build-essential \
+    ca-certificates \
     curl \
     wget \
-    git \
+    git &&
+  sudo rm -rf /var/lib/apt/lists/*
+
+# Compiler related package
+sudo apt-get update &&
+  sudo apt-get install --assume-yes \
     g++ \
     gcc \
     make \
     cmake \
-    cmake-gui \
-    build-essential \
-    ca-certificates &&
+    cmake-gui &&
   sudo rm -rf /var/lib/apt/lists/*
 
-#sudo apt-get update &&
-#  sudo apt-get install --assume-yes \
-#    python3-dev \
-#    python3-pip &&
-#  sudo rm -rf /var/lib/apt/lists/*
-#
-#python3 -m pip install --upgrade pip
+cmake --version
 
 source ./ubuntu/lpm_install_python_dev_tools.bash
 
@@ -98,6 +92,10 @@ sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libeigen3-dev &&
   sudo rm -rf /var/lib/apt/lists/*
+
+# ................................................................................................................
+print_msg "Create required dir structure"
+mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 
 # ................................................................................................................
 echo
@@ -143,6 +141,21 @@ git clone https://github.com/ethz-asl/libnabo.git &&
 
 # ToDo:on task end >> next bloc ↓↓
 #pwd && tree -L 3
+
+# ................................................................................................................
+print_msg "Install tools libpointmatchaer dev tools"
+
+sudo apt-get update &&
+  sudo apt-get install --assume-yes \
+    libyaml-cpp-dev &&
+  sudo rm -rf /var/lib/apt/lists/*
+
+# Package required when GENERATE_API_DOC flag is set to true
+sudo apt-get update &&
+  sudo apt-get install --assume-yes \
+    doxygen \
+    texlive-full &&
+  sudo rm -rf /var/lib/apt/lists/*
 
 print_msg_done "Libpointmatcher dependencies installed"
 print_formated_script_footer 'lpm_install_dependencies_ubuntu.bash' =

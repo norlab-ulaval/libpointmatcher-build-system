@@ -10,6 +10,7 @@
 #   [--os-name ubuntu]                    The operating system name. Either 'ubuntu' or 'osx' (default: see OS_NAME)
 #   [--os-version jammy]                  Name named operating system version, see .env for supported version
 #                                           (default: see OS_VERSION)
+#   [--job-id 666]
 #   [-- <any docker cmd+arg>]             Any argument passed after '--' will be passed to docker compose
 #                                           as docker command and arguments
 #                                           (default: see DOCKER_COMPOSE_CMD_ARGS)
@@ -23,6 +24,7 @@ set -e
 LPM_VERSION='latest'
 OS_NAME='ubuntu'
 OS_VERSION='20.04'
+LPM_JOB_ID=''
 DOCKER_COMPOSE_CMD_ARGS='up --build --force-recreate'
 
 # ....Project root logic...........................................................................................
@@ -50,6 +52,7 @@ function print_help_in_terminal() {
       --os-name ubuntu                        The operating system name. Either 'ubuntu' or 'osx' (default to 'ubuntu')
       --os-version jammy                      Name named operating system version, see .env for supported version
                                               (default to 'jammy')
+      --job-id 1
   \033[1m
     [-- <any docker cmd+arg>]\033[0m                 Any argument passed after '--' will be passed to docker compose as docker
                                               command and arguments (default to '${DOCKER_COMPOSE_CMD_ARGS}')
@@ -81,6 +84,11 @@ while [ $# -gt 0 ]; do
   --os-version)
     OS_VERSION="${2}"
     shift # Remove argument (--os-version)
+    shift # Remove argument value
+    ;;
+  --job-id)
+    LPM_JOB_ID="${2}"
+    shift # Remove argument (--job-id)
     shift # Remove argument value
     ;;
   -h | --help)
@@ -123,11 +131,12 @@ print_msg "Executing docker compose command on ${MSG_DIMMED_FORMAT}docker-compos
 
 # Note: LPM_VERSION will be used to fetch the repo at release tag (ref task NMO-252)
 export LPM_VERSION="${LPM_VERSION}"
+export LPM_JOB_ID="${LPM_JOB_ID}"
 export DEPENDENCIES_BASE_IMAGE="${OS_NAME}"
 export DEPENDENCIES_BASE_IMAGE_TAG="${OS_VERSION}"
 export LPM_IMAGE_TAG="${LPM_VERSION}-${DEPENDENCIES_BASE_IMAGE}${DEPENDENCIES_BASE_IMAGE_TAG}-${LPM_IMAGE_ARCHITECTURE:?'err: variable not set'}"
 
-print_msg_warning "Image tag ${MSG_DIMMED_FORMAT}${LPM_IMAGE_TAG}${MSG_END_FORMAT}"
+print_msg "Image tag ${MSG_DIMMED_FORMAT}${LPM_IMAGE_TAG}${MSG_END_FORMAT}"
 print_msg "Environment variables set for this build run:\n\n${MSG_DIMMED_FORMAT}$(printenv | grep -i -e LPM_ -e DEPENDENCIES_BASE_IMAGE -e BUILDKIT)${MSG_END_FORMAT}\n"
 
 ## docker compose [-f <theComposeFile> ...] [options] [COMMAND] [ARGS...]
