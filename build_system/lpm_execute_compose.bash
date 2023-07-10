@@ -15,16 +15,16 @@
 #                                           as docker command and arguments
 #                                           (default: see DOCKER_COMPOSE_CMD_ARGS)
 #   [-h, --help]                          Get help
+#   [--debug]
 #
 set -e
-#set -v
-#set -x
+
 
 # ....Default......................................................................................................
 LPM_VERSION='latest'
 OS_NAME='ubuntu'
 OS_VERSION='20.04'
-LPM_JOB_ID=''
+LPM_JOB_ID='0'
 DOCKER_COMPOSE_CMD_ARGS='up --build --force-recreate'
 
 # ....Project root logic...........................................................................................
@@ -53,6 +53,7 @@ function print_help_in_terminal() {
       --os-version jammy                      Name named operating system version, see .env for supported version
                                               (default to 'jammy')
       --job-id 1
+      --debug
   \033[1m
     [-- <any docker cmd+arg>]\033[0m                 Any argument passed after '--' will be passed to docker compose as docker
                                               command and arguments (default to '${DOCKER_COMPOSE_CMD_ARGS}')
@@ -90,6 +91,12 @@ while [ $# -gt 0 ]; do
     LPM_JOB_ID="${2}"
     shift # Remove argument (--job-id)
     shift # Remove argument value
+    ;;
+  --debug)
+#    set -v
+#    set -x
+    export BUILDKIT_PROGRESS=plain
+    shift # Remove argument (--debug)
     ;;
   -h | --help)
     print_help_in_terminal

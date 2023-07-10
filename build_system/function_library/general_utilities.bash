@@ -2,7 +2,7 @@
 #
 # General purpose function library
 #
-# Requirement: This script must be executed from directory 'build_system'
+# Requirement: This script must be sourced from directory 'build_system'
 #
 # usage:
 #   $ source ./function_library/general_utilities.bash
@@ -11,7 +11,7 @@ set -e
 
 # ....Pre-condition................................................................................................
 if [[ "$(basename $(pwd))" != "build_system" ]]; then
-  echo -e "\nERROR: This script must be executed from directory 'build_system'!\n cwd: $(pwd)"
+  echo -e "\nERROR: This script must be sourced from directory 'build_system'!\n cwd: $(pwd)"
   exit 1
 fi
 

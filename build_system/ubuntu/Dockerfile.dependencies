@@ -14,6 +14,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND}
 ENV TZ=Etc/UTC
 
+#ENV TERM="xterm"
+ENV TERM=${TERM:-"xterm-color"}
+#ENV TERM="xterm-256color"
+
 # ....Setup timezone and localization..............................................................................
 # change the locale from POSIX to UTF-8
 RUN apt-get update && \

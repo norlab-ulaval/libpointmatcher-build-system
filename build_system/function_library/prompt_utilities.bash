@@ -2,7 +2,7 @@
 #
 # Library of function related to console formatting
 #
-# Requirement: This script must be executed from directory 'build_system'
+# Requirement: This script must be sourced from directory 'build_system'
 #
 # Usage:
 #   $ source ./function_library/prompt_utilities.bash
@@ -11,7 +11,7 @@ set -e
 
 # ....Pre-condition................................................................................................
 if [[ "$(basename $(pwd))" != "build_system" ]]; then
-  echo -e "\nERROR: This script must be executed from directory 'build_system'!\n cwd: $(pwd)"
+  echo -e "\nERROR: This script must be sourced from directory 'build_system'!\n cwd: $(pwd)"
   exit 1
 fi
 
@@ -119,7 +119,16 @@ function print_msg_error_and_exit() {
 # =================================================================================================================
 function draw_horizontal_line_across_the_terminal_window() {
   local SYMBOL="${1:-=}"
-  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "${SYMBOL}"
+
+  # (NICE TO HAVE) ToDo: validate >> var TERM is setup in Dockerfile.dependencies instead. Erase TPUT_FLAG logic.
+#  if [[ ${TERM} == '' ]]; then
+#      TPUT_FLAG='-T xterm'
+##      TPUT_FLAG='-T xterm-256color'
+#  fi
+#  TPUT_FLAG='-T xterm'
+  TPUT_FLAG=''
+
+  printf '%*s\n' "${COLUMNS:-$(tput ${TPUT_FLAG} cols)}" '' | tr ' ' "${SYMBOL}"
 }
 
 # =================================================================================================================
