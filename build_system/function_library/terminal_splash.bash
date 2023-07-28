@@ -40,7 +40,8 @@ function echo_centering_str() {
   the_pad_cha="${3:-" "}"
   local str_len=${#the_str}
   local terminal_width
-  terminal_width=$(tput cols)
+  TPUT_FLAG='-T xterm'
+  terminal_width=$(tput ${TPUT_FLAG} cols)
   local total_padding_len=$(( $terminal_width - $str_len ))
   local single_side_padding_len=$(( $total_padding_len / 2 ))
   pad=$(printf "$the_pad_cha%.0s" $(seq $single_side_padding_len))
