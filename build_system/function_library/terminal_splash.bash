@@ -5,6 +5,14 @@
 # Usage:
 #   $ source function_library/terminal_splash.bash
 #
+set -e
+
+# ....Pre-condition................................................................................................
+if [[ "$(basename $(pwd))" != "build_system" ]]; then
+  echo -e "\nERROR: This script must be sourced from directory 'build_system'!\n cwd: $(pwd)"
+  exit 1
+fi
+
 
 # =================================================================================================================
 # Dynamic printf centering tool. Centering based on the terminal screen width at runtime.
