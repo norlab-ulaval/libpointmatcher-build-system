@@ -35,6 +35,7 @@ fi
 
 print_formated_script_header 'lpm_install_dependencies_ubuntu.bash' "${LPM_LINE_CHAR_INSTALLER}"
 
+exit 1 # (CRITICAL) ToDo: on task end >> delete this line ←
 
 # ................................................................................................................
 echo
