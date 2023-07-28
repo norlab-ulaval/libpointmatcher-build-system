@@ -1,4 +1,10 @@
-#!/bin/bash -i
+#!/bin/bash
+#
+# Requirement: This script must be executed from project root 'NorLab-TeamCity-Server-infrastructure'
+#
+# Usage:
+#   $ source function_library/terminal_splash.bash
+#
 
 # =================================================================================================================
 # Dynamic printf centering tool. Centering based on the terminal screen width at runtime.
