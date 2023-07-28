@@ -192,6 +192,8 @@ cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo \
 make -j $(nproc)
 sudo make install
 
+exit 1 # (CRITICAL) ToDo: on task end >> delete this line ←
+
 print_msg_done "Libpointmatcher installed at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
 print_formated_script_footer 'lpm_install_libpointmatcher_ubuntu.bash' "${LPM_LINE_CHAR_INSTALLER}"
 # ====Teardown=====================================================================================================
