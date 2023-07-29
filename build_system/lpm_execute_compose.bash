@@ -135,9 +135,9 @@ done
 #${MSG_END_FORMAT} "
 
 
-# ..................................................................................................................
-# Set environment variable LPM_IMAGE_ARCHITECTURE
-source ./lpm_utility_script/lpm_export_which_architecture.bash
+## ..................................................................................................................
+## Set environment variable LPM_IMAGE_ARCHITECTURE
+#source ./lpm_utility_script/lpm_export_which_architecture.bash
 
 # ..................................................................................................................
 print_msg "Executing docker compose command on ${MSG_DIMMED_FORMAT}docker-compose.libpointmatcher.yaml${MSG_END_FORMAT} with command ${MSG_DIMMED_FORMAT}${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT}"
