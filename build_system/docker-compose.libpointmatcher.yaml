@@ -21,6 +21,9 @@ services:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
         BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64/v8"
     depends_on:
       - dependencies
   ci:
