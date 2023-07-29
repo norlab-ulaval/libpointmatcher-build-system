@@ -19,6 +19,12 @@
 #     - ARCH: aarch64, arm64, x86_64
 #     - OS: Linux, Darwin, Window
 #
+# (NICE TO HAVE) ToDo: assessment >> check the convention used by docker >> os[/arch[/variant]]
+#       linux/arm64/v8
+#       darwin/arm64/v8
+#       l4t/arm64/v8
+#     ref: https://docs.docker.com/compose/compose-file/05-services/#platform
+#
 # Returns:
 #   exit 1 in case of unsupported processor architecture
 # =================================================================================================================
@@ -40,10 +46,6 @@ source ./function_library/prompt_utilities.bash
 # ====Begin========================================================================================================
 print_formated_script_header 'lpm_export_which_architecture.bash' "${LPM_LINE_CHAR_UTIL}"
 
-# (NICE TO HAVE) ToDo: assessment >> check the convention used by docker >> os[/arch[/variant]]
-#       linux/arm64/v8
-#       darwin/arm64/v8
-#     ref: https://docs.docker.com/compose/compose-file/05-services/#platform
 
 if [[ $(uname -m) == "aarch64" ]]; then
   if [[ -n $(uname -r | grep tegra) ]]; then

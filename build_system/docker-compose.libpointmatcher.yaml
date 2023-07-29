@@ -4,26 +4,26 @@ services:
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.dependencies
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64/v8"
       args:
         BASE_IMAGE: ${DEPENDENCIES_BASE_IMAGE:?err}
         BASE_IMAGE_TAG: ${DEPENDENCIES_BASE_IMAGE_TAG:?err}
         LPM_INSTALLED_LIBRARIES_PATH: ${LPM_INSTALLED_LIBRARIES_PATH:?err}
         LPM_LIBPOINTMATCHER_SRC_REPO_NAME: ${LPM_LIBPOINTMATCHER_SRC_REPO_NAME:?err}
-      platforms:
-        - "linux/amd64"
-        - "linux/arm64/v8"
   dependencies-doc:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-dependencies-doc:${LPM_IMAGE_TAG:?err}
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.dependencies_doc
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64/v8"
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
         BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
-      platforms:
-        - "linux/amd64"
-        - "linux/arm64/v8"
     depends_on:
       - dependencies
   ci:
@@ -31,6 +31,9 @@ services:
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64/v8"
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
@@ -49,6 +52,9 @@ services:
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64/v8"
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies-doc
@@ -61,3 +67,5 @@ services:
     depends_on:
       - dependencies
       - dependencies-doc
+
+
