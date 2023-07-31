@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 #
 # Usage:
 #   $ bash entrypoint_execute_lpm_unittest.bash [<any cmd>]
