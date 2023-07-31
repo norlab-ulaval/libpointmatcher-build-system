@@ -48,6 +48,8 @@ function echo_centering_str() {
   if [[ -z ${TERM} ]]; then
 #    TPUT_FLAG='-T xterm'
     TPUT_FLAG='-T xterm-256color'
+  elif [[ ${TERM} == dumb ]]; then
+    TPUT_FLAG='-T xterm-256color'
   fi
 
   # (NICE TO HAVE) ToDo:
