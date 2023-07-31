@@ -127,6 +127,9 @@ function draw_horizontal_line_across_the_terminal_window() {
   elif [[ ${TERM} == dumb ]]; then
     # "dumb" is the one set on TeamCity Agent
     TPUT_FLAG='-T xterm-256color'
+  elif [[ ${TERM} == xterm-color ]]; then
+    # "dumb" is the one set on TeamCity Agent
+    TPUT_FLAG='-T xterm-256color'
   fi
 
   # (NICE TO HAVE) ToDo:

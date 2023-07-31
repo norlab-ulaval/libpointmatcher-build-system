@@ -19,4 +19,5 @@ source lpm_install_libpointmatcher_ubuntu.bash \
   ${LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG}
 
 # ====Continue=====================================================================================================
-exec "${@}"
+#exec "${@}"
+exec "$@"
