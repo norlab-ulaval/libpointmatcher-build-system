@@ -41,8 +41,8 @@ function echo_centering_str() {
   local str_len=${#the_str}
   local terminal_width
 
+  TPUT_FLAG=''
   if [[ -z ${TERM} ]]; then
-#    TPUT_FLAG=''
 #    TPUT_FLAG='-T xterm'
     TPUT_FLAG='-T xterm-256color'
   fi
