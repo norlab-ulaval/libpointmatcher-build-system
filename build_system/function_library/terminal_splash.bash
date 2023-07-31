@@ -41,6 +41,9 @@ function echo_centering_str() {
   local str_len=${#the_str}
   local terminal_width
 
+  echo "\$TERM=${TERM}" # (Priority) ToDo: on task end >> delete this line ←
+  echo "\$COLUMNS=${COLUMNS}" # (Priority) ToDo: on task end >> delete this line ←
+
   TPUT_FLAG=''
   if [[ -z ${TERM} ]]; then
 #    TPUT_FLAG='-T xterm'
