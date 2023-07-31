@@ -41,19 +41,20 @@ function echo_centering_str() {
   local str_len=${#the_str}
   local terminal_width
 
-  echo "\$TERM=${TERM}" # (Priority) ToDo: on task end >> delete this line ←
-  echo "\$COLUMNS=${COLUMNS}" # (Priority) ToDo: on task end >> delete this line ←
+#  echo "\$TERM=${TERM}" # (Priority) ToDo: on task end >> delete this line ←
+#  echo "\$COLUMNS=${COLUMNS}" # (Priority) ToDo: on task end >> delete this line ←
 
   TPUT_FLAG=''
   if [[ -z ${TERM} ]]; then
 #    TPUT_FLAG='-T xterm'
     TPUT_FLAG='-T xterm-256color'
   elif [[ ${TERM} == dumb ]]; then
+    # "dumb" is the one set on TeamCity Agent
     TPUT_FLAG='-T xterm-256color'
   fi
 
   # (NICE TO HAVE) ToDo:
-  #     - var TERM should be setup in Dockerfile.dependencies instead.
+  #     - var TERM should be setup in Dockerfile.dependencies.
   #     - print a warning message if TERM is not set
 
 #  terminal_width=$(tput ${TPUT_FLAG} cols)

@@ -120,9 +120,12 @@ function print_msg_error_and_exit() {
 function draw_horizontal_line_across_the_terminal_window() {
   local SYMBOL="${1:-=}"
 
+  TPUT_FLAG=''
   if [[ -z ${TERM} ]]; then
-#    TPUT_FLAG=''
 #    TPUT_FLAG='-T xterm'
+    TPUT_FLAG='-T xterm-256color'
+  elif [[ ${TERM} == dumb ]]; then
+    # "dumb" is the one set on TeamCity Agent
     TPUT_FLAG='-T xterm-256color'
   fi
 
