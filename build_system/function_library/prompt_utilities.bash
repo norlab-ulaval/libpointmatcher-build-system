@@ -126,6 +126,10 @@ function draw_horizontal_line_across_the_terminal_window() {
     TPUT_FLAG='-T xterm-256color'
   fi
 
+  # (NICE TO HAVE) ToDo:
+  #     - var TERM should be setup in Dockerfile.dependencies instead.
+  #     - print a warning message if TERM is not set
+
   printf '%*s\n' "${COLUMNS:-$(tput ${TPUT_FLAG} cols)}" '' | tr ' ' "${SYMBOL}"
 
 }

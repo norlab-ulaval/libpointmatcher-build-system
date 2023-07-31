@@ -27,12 +27,53 @@ services:
     depends_on:
       - dependencies
   ci:
+    # ToDo: validate >> --run-linux-amd64
+    # ToDo: validate >> --run-linux-arm64v8
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci
       platforms:
         - "linux/amd64"
+      no_cache: true
+      args:
+        PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
+        BASE_IMAGE: libpointmatcher-dependencies
+        BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
+        LIBPOINTMATCHER_VERSION: 'head'
+        LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
+        # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
+    tty: true
+    stdin_open: true
+#    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
+    depends_on:
+      - dependencies
+  ci-linux-amd64:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-amd64
+    build:
+      context: ..
+      dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci
+      platforms:
+        - "linux/amd64"
+      no_cache: true
+      args:
+        PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
+        BASE_IMAGE: libpointmatcher-dependencies
+        BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
+        LIBPOINTMATCHER_VERSION: 'head'
+        LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
+        # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
+    tty: true
+    stdin_open: true
+#    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
+    depends_on:
+      - dependencies
+  ci-linux-arm64v8:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-arm64v8
+    build:
+      context: ..
+      dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci
+      platforms:
         - "linux/arm64/v8"
       no_cache: true
       args:

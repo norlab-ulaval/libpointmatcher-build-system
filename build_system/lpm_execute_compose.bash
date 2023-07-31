@@ -5,6 +5,8 @@
 # Usage:
 #   $ bash lpm_execute_compose.bash [<optional flag>] [-- <any docker cmd+arg>]
 #
+#   $ bash lpm_execute_compose.bash -- run --rm ci
+#
 # Arguments:
 #   [--libpointmatcher-version v1.3.1]     The libpointmatcher release tag (default: see LIBPOINTMATCHER_VERSION)
 #   [--os-name ubuntu]                    The operating system name. Either 'ubuntu' or 'osx' (default: see OS_NAME)
@@ -13,6 +15,9 @@
 #   [-- <any docker cmd+arg>]             Any argument passed after '--' will be passed to docker compose
 #                                           as docker command and arguments
 #                                           (default: 'up --build --force-recreate')
+# ToDo: validate >> next two lines ↓↓
+##   [--run-linux-amd64]                   Set docker default platform to linux/amd64 for docker compose run/up command
+##   [--run-linux-arm64v8]                 Set docker default platform to linux/arm64/v8 for docker compose run/up command
 #   [-h, --help]                          Get help
 #   [--debug]
 #
@@ -42,6 +47,9 @@ source ./function_library/prompt_utilities.bash
 source ./function_library/general_utilities.bash
 source ./function_library/terminal_splash.bash
 
+# ToDo: validate >> --run-linux-amd64
+# ToDo: validate >> --run-linux-arm64v8
+
 function print_help_in_terminal() {
   echo -e "\n
 \$ ${0} [<optional flag>] [-- <any docker cmd+arg>]
@@ -52,6 +60,8 @@ function print_help_in_terminal() {
       --os-name ubuntu                        The operating system name. Either 'ubuntu' or 'osx' (default to 'ubuntu')
       --os-version jammy                      Name named operating system version, see .env for supported version
                                               (default to 'jammy')
+      --run-linux-amd64                       Set docker default platform to linux/amd64 for docker compose run/up command
+      --run-linux-arm64v8                     Set docker default platform to linux/arm64/v8 for docker compose run/up command
       --debug
   \033[1m
     [-- <any docker cmd+arg>]\033[0m                 Any argument passed after '--' will be passed to docker compose as docker
@@ -92,6 +102,16 @@ while [ $# -gt 0 ]; do
     OS_VERSION="${2}"
     shift # Remove argument (--os-version)
     shift # Remove argument value
+    ;;
+  # (Priority) ToDo: validate >> next bloc ↓↓
+  --run-linux-amd64)
+    export DOCKER_DEFAULT_PLATFORM=linux/amd64
+    shift # Remove argument --run-linux-amd64)
+    ;;
+  # (Priority) ToDo: validate >> next bloc ↓↓
+  --run-linux-arm64v8)
+    export DOCKER_DEFAULT_PLATFORM=linux/arm64/v8
+    shift # Remove argument --run-linux-arm64v8)
     ;;
 #  --job-id)
 #    LPM_JOB_ID="${2}"

@@ -47,7 +47,12 @@ function echo_centering_str() {
     TPUT_FLAG='-T xterm-256color'
   fi
 
-  terminal_width=$(tput ${TPUT_FLAG} cols)
+  # (NICE TO HAVE) ToDo:
+  #     - var TERM should be setup in Dockerfile.dependencies instead.
+  #     - print a warning message if TERM is not set
+
+#  terminal_width=$(tput ${TPUT_FLAG} cols)
+  terminal_width="${COLUMNS:-$(tput ${TPUT_FLAG} cols)}"
   local total_padding_len=$(( $terminal_width - $str_len ))
   local single_side_padding_len=$(( $total_padding_len / 2 ))
   pad=$(printf "$the_pad_cha%.0s" $(seq $single_side_padding_len))
