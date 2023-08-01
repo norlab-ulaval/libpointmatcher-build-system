@@ -122,9 +122,9 @@ function draw_horizontal_line_across_the_terminal_window() {
   local terminal_width
   local pad
 
+  # Ref https://bash.cyberciti.biz/guide/$TERM_variable
   TPUT_FLAG=''
   if [[ -z ${TERM} ]]; then
-#    TPUT_FLAG='-T xterm'
     TPUT_FLAG='-T xterm-256color'
   elif [[ ${TERM} == dumb ]]; then
     # "dumb" is the one set on TeamCity Agent

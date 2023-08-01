@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 #
 # Execute build matrix on docker compose docker-compose.libpointmatcher.yaml
 #
