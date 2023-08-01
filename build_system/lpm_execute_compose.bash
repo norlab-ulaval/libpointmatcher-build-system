@@ -28,7 +28,7 @@ set -e
 LIBPOINTMATCHER_VERSION='head'
 OS_NAME='ubuntu'
 OS_VERSION='20.04'
-#LPM_JOB_ID='0'
+LPM_JOB_ID='0'
 DOCKER_COMPOSE_CMD_ARGS='up --build --force-recreate'
 
 # ....Project root logic...........................................................................................
@@ -62,6 +62,7 @@ function print_help_in_terminal() {
                                               (default to 'jammy')
       --run-linux-amd64                       Set docker default platform to linux/amd64 for docker compose run/up command
       --run-linux-arm64v8                     Set docker default platform to linux/arm64/v8 for docker compose run/up command
+      --job-id                                Append job ID for CI test image
       --debug
   \033[1m
     [-- <any docker cmd+arg>]\033[0m                 Any argument passed after '--' will be passed to docker compose as docker
@@ -113,11 +114,11 @@ while [ $# -gt 0 ]; do
     export DOCKER_DEFAULT_PLATFORM=linux/arm64/v8
     shift # Remove argument --run-linux-arm64v8)
     ;;
-#  --job-id)
-#    LPM_JOB_ID="${2}"
-#    shift # Remove argument (--job-id)
-#    shift # Remove argument value
-#    ;;
+  --job-id)
+    LPM_JOB_ID="${2}"
+    shift # Remove argument (--job-id)
+    shift # Remove argument value
+    ;;
   --debug)
 #    set -v
 #    set -x
@@ -164,7 +165,7 @@ print_msg "Executing docker compose command on ${MSG_DIMMED_FORMAT}docker-compos
 
 # Note: LIBPOINTMATCHER_VERSION will be used to fetch the repo at release tag (ref task NMO-252)
 export LIBPOINTMATCHER_VERSION="${LIBPOINTMATCHER_VERSION}"
-#export LPM_JOB_ID="${LPM_JOB_ID}"
+export LPM_JOB_ID="${LPM_JOB_ID}"
 export DEPENDENCIES_BASE_IMAGE="${OS_NAME}"
 export DEPENDENCIES_BASE_IMAGE_TAG="${OS_VERSION}"
 

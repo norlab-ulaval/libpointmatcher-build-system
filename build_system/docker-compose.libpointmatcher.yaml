@@ -29,14 +29,15 @@ services:
   ci:
     # ToDo: validate >> --run-linux-amd64
     # ToDo: validate >> --run-linux-arm64v8
-    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
+    pull_policy: never
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci
       platforms:
         - "linux/amd64"
         - "linux/arm64/v8"
-      no_cache: true
+#      no_cache: true
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
@@ -44,11 +45,27 @@ services:
         LIBPOINTMATCHER_VERSION: 'head'
         LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
         # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
+#    tty: true
+#    stdin_open: true
+    #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
+#    depends_on:
+#      - dependencies
+  ci-linux-amd64-extend:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
+#    pull_policy: if_not_present
+    platform: "linux/amd64"
     tty: true
     stdin_open: true
-    #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
-    depends_on:
-      - dependencies
+#    depends_on:
+#      - ci
+  ci-linux-arm64v8-extend:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
+#    pull_policy: never
+    platform: "linux/arm64/v8"
+    tty: true
+    stdin_open: true
+#    depends_on:
+#      - ci
   ci-linux-amd64:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-amd64
     platform: "linux/amd64"
@@ -68,8 +85,8 @@ services:
     tty: true
     stdin_open: true
     #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
-    depends_on:
-      - dependencies
+#    depends_on:
+#      - dependencies
   ci-linux-arm64v8:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-arm64v8
     platform: "linux/arm64/v8"
@@ -89,22 +106,8 @@ services:
     tty: true
     stdin_open: true
     #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
-    depends_on:
-      - dependencies
-  ci-linux-amd64-extend:
-    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}
-    platform: "linux/amd64"
-    tty: true
-    stdin_open: true
-    depends_on:
-      - ci
-  ci-linux-arm64v8-extend:
-    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}
-    platform: "linux/arm64/v8"
-    tty: true
-    stdin_open: true
-    depends_on:
-      - ci
+#    depends_on:
+#      - dependencies
   release:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher:${LPM_IMAGE_TAG:?err}
     container_name: libpointmatcher
