@@ -89,6 +89,18 @@ services:
 #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
     depends_on:
       - dependencies
+  ci-linux-amd64-extend:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}
+    platform: "linux/amd64"
+    tty: true
+    stdin_open: true
+    depends_on: ci
+  ci-linux-arm64v8-extend:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}
+    platform: "linux/arm64/v8"
+    tty: true
+    stdin_open: true
+    depends_on: ci
   release:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher:${LPM_IMAGE_TAG:?err}
     container_name: libpointmatcher
