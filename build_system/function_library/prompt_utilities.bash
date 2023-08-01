@@ -119,6 +119,8 @@ function print_msg_error_and_exit() {
 # =================================================================================================================
 function draw_horizontal_line_across_the_terminal_window() {
   local SYMBOL="${1:-=}"
+  local terminal_width
+  local pad
 
   TPUT_FLAG=''
   if [[ -z ${TERM} ]]; then
@@ -130,11 +132,16 @@ function draw_horizontal_line_across_the_terminal_window() {
   fi
 
   # (NICE TO HAVE) ToDo:
-  #     - var TERM should be setup in Dockerfile.dependencies instead.
+  #     - var TERM should be setup in Dockerfile.dependencies
   #     - print a warning message if TERM is not set
 
-  printf '%*s\n' "${COLUMNS:-$(tput ${TPUT_FLAG} cols)}" '' | tr ' ' "${SYMBOL}"
+  ## Original version
+  #printf '%*s\n' "${COLUMNS:-$(tput ${TPUT_FLAG} cols)}" '' | tr ' ' "${SYMBOL}"
 
+  # Alt version
+  terminal_width="${COLUMNS:-$(tput ${TPUT_FLAG} cols)}"
+  pad=$(printf "${SYMBOL}%.0s" $(seq $terminal_width))
+  printf "${pad}\033[0m\n"
 }
 
 # =================================================================================================================
