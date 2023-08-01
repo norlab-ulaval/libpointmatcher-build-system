@@ -24,8 +24,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR "${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 
 # Copy all files from the checkout branch in the repository (except those in the .dockerignore)
-#COPY . .
-COPY ./build_system/ ./build_system
+COPY . .
+#COPY ./build_system/ ./build_system
 
 WORKDIR ./build_system/ubuntu
 
