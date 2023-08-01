@@ -51,7 +51,7 @@ services:
       - dependencies
   ci-linux-amd64:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-amd64
-    platforms: "linux/amd64"
+    platform: "linux/amd64"
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci
@@ -72,7 +72,7 @@ services:
       - dependencies
   ci-linux-arm64v8:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-arm64v8
-    platforms: "linux/arm64/v8"
+    platform: "linux/arm64/v8"
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci

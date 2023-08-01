@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/bin/bash
 #
 # Build and run a single container based on docker compose docker-compose.libpointmatcher.yaml
 #
