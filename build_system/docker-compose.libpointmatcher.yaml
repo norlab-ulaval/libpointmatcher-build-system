@@ -52,7 +52,7 @@ services:
 #      - dependencies
   ci-linux-amd64-extend:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
-#    pull_policy: if_not_present
+    pull_policy: always
     platform: "linux/amd64"
     tty: true
     stdin_open: true
@@ -60,7 +60,7 @@ services:
 #      - ci
   ci-linux-arm64v8-extend:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
-#    pull_policy: never
+    pull_policy: always
     platform: "linux/arm64/v8"
     tty: true
     stdin_open: true

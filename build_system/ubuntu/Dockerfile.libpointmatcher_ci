@@ -32,6 +32,7 @@ WORKDIR ./build_system/ubuntu
 RUN chmod +x entrypoint_build_and_test_libpointmatcher_checkout_branch.bash
 RUN chmod +x entrypoint_build_libpointmatcher_checkout_branch.bash
 RUN chmod +x entrypoint_execute_lpm_unittest.bash
+RUN chmod +x entrypoint.bash
 
 
 # ====End==========================================================================================================
