@@ -50,6 +50,28 @@ services:
     #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
 #    depends_on:
 #      - dependencies
+  ci_build_and_test:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci-build-and-test:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
+    pull_policy: never
+    build:
+      context: ..
+      dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci_build_and_test
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64/v8"
+#      no_cache: true
+      args:
+        PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
+        BASE_IMAGE: libpointmatcher-dependencies
+        BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
+        LIBPOINTMATCHER_VERSION: 'head'
+        LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
+        # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
+    tty: true
+    stdin_open: true
+    #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
+#    depends_on:
+#      - dependencies
   ci-linux-amd64-extend:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
     pull_policy: always
