@@ -140,8 +140,8 @@ function draw_horizontal_line_across_the_terminal_window() {
 
   # Alt version
   terminal_width="${COLUMNS:-$(tput ${TPUT_FLAG} cols)}"
-  pad=$(printf "${SYMBOL}%.0s" $(seq $terminal_width))
-  printf "${pad}\033[0m\n"
+  pad=$(printf -- "${SYMBOL}%.0s" $(seq $terminal_width))
+  printf -- "${pad}\n"
 }
 
 # =================================================================================================================

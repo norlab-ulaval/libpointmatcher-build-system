@@ -64,8 +64,8 @@ function echo_centering_str() {
   local total_padding_len=$(( $terminal_width - $str_len ))
   local single_side_padding_len=$(( $total_padding_len / 2 ))
   local pad
-  pad=$(printf "$the_pad_cha%.0s" $(seq $single_side_padding_len))
-  printf "${pad}${the_style}${the_str}\033[0m${pad}\n"                        # <-- Quick hack
+  pad=$(printf -- "$the_pad_cha%.0s" $(seq $single_side_padding_len))
+  printf -- "${pad}${the_style}${the_str}\033[0m${pad}\n"                        # <-- Quick hack
 }
 
 
