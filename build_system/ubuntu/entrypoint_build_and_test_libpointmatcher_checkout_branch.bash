@@ -25,4 +25,4 @@ utest/utest --path "${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_RE
 # (Priority) ToDo: implement (ref task NMO-266 LPM unit-test › gtest feedback for TC build step pass/fail status)
 
 # ====Continue=====================================================================================================
-exec "${@}"
+exec "$@"

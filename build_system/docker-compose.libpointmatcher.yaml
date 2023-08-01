@@ -59,7 +59,8 @@ services:
       platforms:
         - "linux/amd64"
         - "linux/arm64/v8"
-#      no_cache: true
+      privileged: true
+      no_cache: true
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
@@ -67,9 +68,9 @@ services:
         LIBPOINTMATCHER_VERSION: 'head'
         LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
         # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
-    tty: true
-    stdin_open: true
-    #    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
+#    tty: true
+#    stdin_open: true
+    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
 #    depends_on:
 #      - dependencies
   ci-linux-amd64-extend:
