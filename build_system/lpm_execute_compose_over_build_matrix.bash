@@ -14,7 +14,8 @@
 #   [--os-name-build-matrix-override ubuntu]
 #                     The operating system name. Override must be a single value
 #                     (default to array sequence specified in .env.build_matrix)
-#   [--os-version-build-matrix-override jammy]
+#   [--ubuntu-version-build-matrix-override jammy]
+#   [--osx-version-build-matrix-override ventura]
 #                     Named operating system version. Override must be a single value
 #                     (default to array sequence specified in .env.build_matrix)
 #   [-- <any docker cmd+arg>]
@@ -58,7 +59,8 @@ function print_help_in_terminal() {
       --os-name-build-matrix-override ubuntu
                           The operating system name. Override must be a single value
                           (default to array sequence specified in .env.build_matrix)
-      --os-version-build-matrix-override jammy
+      --ubuntu-version-build-matrix-override jammy
+      --osx-version-build-matrix-override ventura
                           Named operating system version. Override must be a single value
                           (default to array sequence specified in .env.build_matrix)
 
