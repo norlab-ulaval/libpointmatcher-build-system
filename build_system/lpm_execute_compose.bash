@@ -168,4 +168,3 @@ show_and_execute_docker "compose -f docker-compose.libpointmatcher.yaml ${DOCKER
 print_formated_script_footer 'lpm_execute_compose.bash' "${LPM_LINE_CHAR_BUILDER_LVL2}"
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
-
