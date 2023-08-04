@@ -15,10 +15,12 @@ services:
         IS_TEAMCITY_RUN: ${IS_TEAMCITY_RUN}
   dependencies-amd64:
     extends: dependencies
-    platform: "linux/amd64"
+    build:
+      platforms: "linux/amd64"
   dependencies-arm64v8:
     extends: dependencies
-    platform: "linux/arm64/v8"
+    build:
+      platforms: "linux/arm64/v8"
   dependencies-doc:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-dependencies-doc:${LPM_IMAGE_TAG:?err}
     build:
