@@ -50,6 +50,7 @@ sudo apt-get update &&
     git \
     g++ \
     gcc \
+    catch \
     make \
     cmake \
     cmake-gui &&
