@@ -187,6 +187,8 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       SHOW_SPLASH_EC='false'
 
+      echo "##teamcity[blockOpened name='lpm_execute_compose' description='lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}']"
+
       source ./lpm_execute_compose.bash --libpointmatcher-version "${EACH_LPM_VERSION}" \
                                         --os-name "${EACH_OS_NAME}" \
                                         --os-version "${EACH_OS_VERSION}" \
@@ -195,6 +197,8 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       # Collect image tags exported by lpm_execute_compose.bash
       IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${LPM_IMAGE_TAG}")
+
+      echo "##teamcity[blockClosed name='lpm_execute_compose']"
 
     done
   done
@@ -216,9 +220,14 @@ Tag crawled:
 "
 for tag in "${IMAGE_TAG_CRAWLED[@]}" ; do
     echo -e "${MSG_DIMMED_FORMAT}   ${tag}${MSG_END_FORMAT}"
-    echo "##teamcity[addBuildTag '${tag}']"
 done
 
 print_formated_script_footer 'lpm_execute_compose_over_build_matrix.bash' "${LPM_LINE_CHAR_BUILDER_LVL1}"
+
+# ====TeamCity service message=====================================================================================
+# Tag added to the TeamCity build via a service message
+for tag in "${IMAGE_TAG_CRAWLED[@]}" ; do
+    echo "##teamcity[addBuildTag '${tag}']"
+done
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
