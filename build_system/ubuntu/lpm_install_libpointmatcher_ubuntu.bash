@@ -87,9 +87,9 @@ print_formated_script_header "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMA
 
 while [ $# -gt 0 ]; do
 
-    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-    echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
-  #  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
+#    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+#    echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+#  #  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
 
   case $1 in
   # ToDo: unit-test
@@ -143,17 +143,17 @@ while [ $# -gt 0 ]; do
 
 done
 
-#echo -e "'\$*' on DONE: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-#
-# ToDo: on task end >> delete next bloc ↓↓
-echo -e "${MSG_DIMMED_FORMAT}
-LPM_INSTALLED_LIBRARIES_PATH=${LPM_INSTALLED_LIBRARIES_PATH}
-BUILD_TESTS_FLAG=${BUILD_TESTS_FLAG}
-GENERATE_API_DOC_FLAG=${GENERATE_API_DOC_FLAG}
-BUILD_SYSTEM_CI_INSTALL=${BUILD_SYSTEM_CI_INSTALL}
-${MSG_END_FORMAT}"
-#
-#echo "printenv" && printenv # ToDo: on task end >> delete this line ←
+##echo -e "'\$*' on DONE: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+##
+## ToDo: on task end >> delete next bloc ↓↓
+#echo -e "${MSG_DIMMED_FORMAT}
+#LPM_INSTALLED_LIBRARIES_PATH=${LPM_INSTALLED_LIBRARIES_PATH}
+#BUILD_TESTS_FLAG=${BUILD_TESTS_FLAG}
+#GENERATE_API_DOC_FLAG=${GENERATE_API_DOC_FLAG}
+#BUILD_SYSTEM_CI_INSTALL=${BUILD_SYSTEM_CI_INSTALL}
+#${MSG_END_FORMAT}"
+##
+##echo "printenv" && printenv # ToDo: on task end >> delete this line ←
 
 # ................................................................................................................
 print_msg "Create required dir structure"

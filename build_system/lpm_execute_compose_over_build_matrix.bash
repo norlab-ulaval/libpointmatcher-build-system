@@ -79,8 +79,8 @@ print_formated_script_header 'lpm_execute_compose_over_build_matrix.bash' "${LPM
 
 while [ $# -gt 0 ]; do
 
-    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-    echo -e "\$1: ${1}    \$2: ${2}" # ToDo: on task end >> delete this line ←
+#    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+#    echo -e "\$1: ${1}    \$2: ${2}" # ToDo: on task end >> delete this line ←
 
   case $1 in
   --libpointmatcher-version-build-matrix-override)
