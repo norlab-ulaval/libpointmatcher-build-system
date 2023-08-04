@@ -71,7 +71,6 @@ if [[ "${SHOW_SPLASH_EC}" == 'true' ]]; then
   norlab_splash "${LPM_BUILD_SYSTEM_SPLASH_NAME}" "https://github.com/${LPM_LIBPOINTMATCHER_SRC_DOMAIN}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 fi
 
-echo
 print_formated_script_header 'lpm_execute_compose.bash' "${LPM_LINE_CHAR_BUILDER_LVL2}"
 
 # ....Script command line flags....................................................................................
