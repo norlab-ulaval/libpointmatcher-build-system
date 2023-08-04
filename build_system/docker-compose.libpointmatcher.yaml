@@ -12,6 +12,7 @@ services:
         BASE_IMAGE_TAG: ${DEPENDENCIES_BASE_IMAGE_TAG:?err}
         LPM_INSTALLED_LIBRARIES_PATH: ${LPM_INSTALLED_LIBRARIES_PATH:?err}
         LPM_LIBPOINTMATCHER_SRC_REPO_NAME: ${LPM_LIBPOINTMATCHER_SRC_REPO_NAME:?err}
+    tty: true
   dependencies-doc:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-dependencies-doc:${LPM_IMAGE_TAG:?err}
     build:
@@ -24,6 +25,7 @@ services:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
         BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
+    tty: true
     depends_on:
       - dependencies
   ci_build_and_test:
