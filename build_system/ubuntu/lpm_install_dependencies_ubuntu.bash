@@ -156,6 +156,9 @@ sudo apt-get update &&
   sudo rm -rf /var/lib/apt/lists/*
 
 
+# Tag added to the TeamCity build via a service message
+echo "##teamcity[addBuildTag '${LPM_IMAGE_ARCHITECTURE}']"
+
 print_msg_done "Libpointmatcher dependencies installed"
 print_formated_script_footer "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 # ====Teardown=====================================================================================================
