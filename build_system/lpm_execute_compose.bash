@@ -24,7 +24,7 @@ set -e
 # ....Default......................................................................................................
 LIBPOINTMATCHER_VERSION='head'
 OS_NAME='ubuntu'
-OS_VERSION='20.04'
+OS_VERSION='focal'
 #LPM_JOB_ID='0'
 DOCKER_COMPOSE_CMD_ARGS='up --build --force-recreate'
 
