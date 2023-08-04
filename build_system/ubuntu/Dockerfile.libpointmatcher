@@ -34,13 +34,15 @@ WORKDIR ./build_system/ubuntu
 RUN chmod +x lpm_install_libpointmatcher_ubuntu.bash
 RUN chmod +x entrypoint.bash
 
-## ToDo: on task end >> delete next bloc ↓↓
+## (CRITICAL) ToDo: on task end >> delete next bloc ↓↓
 #RUN chmod +x lpm_install_doc_dependencies_ubuntu.bash
 #RUN bash lpm_install_doc_dependencies_ubuntu.bash
 
 # ====Install Libpointmatcher=======================================================================================
 
-RUN bash lpm_install_libpointmatcher_ubuntu.bash \
+# (CRITICAL) ToDo: validate effect on teamcity build log (source vs bash)
+#RUN bash lpm_install_libpointmatcher_ubuntu.bash \
+RUN source lpm_install_libpointmatcher_ubuntu.bash \
     --libpointmatcher-version ${LIBPOINTMATCHER_VERSION} \
     ${LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG}
 

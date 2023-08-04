@@ -62,13 +62,9 @@ COPY ./build_system/function_library/ ./function_library/
 COPY ./build_system/ubuntu/lpm_install_python_dev_tools.bash ./ubuntu/
 
 RUN chmod +x ./ubuntu/lpm_install_python_dev_tools.bash
-RUN bash ./ubuntu/lpm_install_python_dev_tools.bash
 
-
-# ....Install TeamCity and CI/CD utilities..........................................................................
-RUN pip install --no-cache-dir --verbose --upgrade pip
-RUN pip install --no-cache-dir --verbose --upgrade pytest
-RUN pip install --no-cache-dir --verbose teamcity-messages
+# (CRITICAL) ToDo: validate effect on teamcity build log (source vs bash)
+RUN source ./ubuntu/lpm_install_python_dev_tools.bash
 
 
 # ====Install Libpointmatcher dependencies==========================================================================
