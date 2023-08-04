@@ -64,6 +64,15 @@ sudo apt-get update &&
 
 cmake --version
 
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then
+  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install development utilities']"
+fi
+
+# ................................................................................................................
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then
+  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install development utilities (python)']"
+fi
+
 source ./ubuntu/lpm_install_python_dev_tools.bash
 
 ## ToDo: assessment >> check if next bloc ↓↓ is needed
@@ -76,8 +85,9 @@ source ./ubuntu/lpm_install_python_dev_tools.bash
 #    && sudo rm -rf /var/lib/apt/lists/*;
 
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install development utilities']"
+  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install development utilities (python)']"
 fi
+
 
 # ................................................................................................................
 # https://www.boost.org/doc/libs/1_79_0/more/getting_started/unix-variants.html
