@@ -31,7 +31,7 @@ source ./lpm_utility_script/lpm_export_which_architecture.bash
 
 # ....TeamCity service message......................................................................................
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
+  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} ${MSG_WARNING_FORMAT_TEAMCITY}execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})${MSG_END_FORMAT_TEAMCITY}']"
 fi
 
 # ====Begin========================================================================================================
@@ -169,7 +169,7 @@ print_formated_script_footer "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_
 
 # ....TeamCity service message......................................................................................
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
+  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} ${MSG_WARNING_FORMAT_TEAMCITY}execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})${MSG_END_FORMAT_TEAMCITY}']"
 fi
 
 # ====Teardown=====================================================================================================
