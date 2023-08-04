@@ -187,7 +187,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       SHOW_SPLASH_EC='false'
 
-      echo "##teamcity[blockOpened name='lpm_execute_compose' description='lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}']"
+      echo "##teamcity[blockOpened name='${MSG_BASE} execute compose' description='${MSG_DIMMED_FORMAT}lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT}']"
 
       source ./lpm_execute_compose.bash --libpointmatcher-version "${EACH_LPM_VERSION}" \
                                         --os-name "${EACH_OS_NAME}" \
@@ -198,13 +198,13 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
       # Collect image tags exported by lpm_execute_compose.bash
       IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${LPM_IMAGE_TAG}")
 
-      echo "##teamcity[blockClosed name='lpm_execute_compose']"
+      echo "##teamcity[blockClosed name='${MSG_BASE} execute compose']"
 
     done
   done
 done
 
-
+echo
 print_msg "Environment variables ${MSG_EMPH_FORMAT}(build matrix)${MSG_END_FORMAT} used by compose:\n
 ${MSG_DIMMED_FORMAT}    LPM_LIBPOINTMATCHER_VERSIONS=(${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[*]}) ${MSG_END_FORMAT}
 ${MSG_DIMMED_FORMAT}    LPM_SUPPORTED_OS=(${FREEZED_LPM_SUPPORTED_OS[*]}) ${MSG_END_FORMAT}
