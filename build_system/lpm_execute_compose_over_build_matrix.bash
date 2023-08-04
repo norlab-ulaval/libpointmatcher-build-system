@@ -187,9 +187,9 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       SHOW_SPLASH_EC='false'
 
-      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute compose' description='|n\tlpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} |n\t\t\t--os-name ${EACH_OS_NAME} |n\t\t\t--os-version ${EACH_OS_VERSION} |n\t\t\t-- ${DOCKER_COMPOSE_CMD_ARGS}']"
+      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute compose' description='|r          lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}']"
 
-      echo "##teamcity[notification notifier='slack' message='(STARTED) ```lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='#norlab-teamcity-server-libpointmatcher```']"
+      echo "##teamcity[notification notifier='slack' message='(STARTED) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='norlab-teamcity-server-libpointmatcher']"
 
       source ./lpm_execute_compose.bash --libpointmatcher-version "${EACH_LPM_VERSION}" \
                                         --os-name "${EACH_OS_NAME}" \
@@ -201,7 +201,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
       IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${LPM_IMAGE_TAG}")
 
       echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute compose']"
-      echo "##teamcity[notification notifier='slack' message='(DONE) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='#norlab-teamcity-server-libpointmatcher']"
+      echo "##teamcity[notification notifier='slack' message='(DONE) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='norlab-teamcity-server-libpointmatcher']"
 
     done
   done
