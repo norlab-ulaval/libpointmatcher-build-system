@@ -40,17 +40,12 @@ print_formated_script_header "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_
 
 # ................................................................................................................
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[flowStarted flowId='${LPM_IMAGE_ARCHITECTURE}-dev-util']"
   echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install development utilities']"
-#  echo "##teamcity[flowStarted flowId='Install development utilities' parent='${LPM_IMAGE_ARCHITECTURE}']"
-#  echo "##teamcity[blockOpened flowId='Install development utilities' name='${MSG_BASE_TEAMCITY} Install development utilities']"
-#  echo "##teamcity[blockOpened flowId='${LPM_IMAGE_ARCHITECTURE}' name='${MSG_BASE_TEAMCITY} Install development utilities' ]"
 else
   echo
   print_msg "Install development utilities"
   echo
 fi
-
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
@@ -59,12 +54,7 @@ sudo apt-get update &&
     ca-certificates \
     curl \
     wget \
-    git &&
-  sudo rm -rf /var/lib/apt/lists/*
-
-# Compiler related package
-sudo apt-get update &&
-  sudo apt-get install --assume-yes \
+    git \
     g++ \
     gcc \
     make \
@@ -86,24 +76,18 @@ source ./ubuntu/lpm_install_python_dev_tools.bash
 #    && sudo rm -rf /var/lib/apt/lists/*;
 
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-#  echo "##teamcity[blockClosed flowId='${LPM_IMAGE_ARCHITECTURE}' name='${MSG_BASE_TEAMCITY} Install development utilities']"
-#  echo "##teamcity[blockClosed flowId='Install development utilities' name='${MSG_BASE_TEAMCITY} Install development utilities']"
   echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install development utilities']"
-  echo "##teamcity[flowFinished flowId='${LPM_IMAGE_ARCHITECTURE}-dev-util']"
-#  echo "##teamcity[flowFinished flowId='Install development utilities' parent='${LPM_IMAGE_ARCHITECTURE}']"
 fi
 
 # ................................................................................................................
 # https://www.boost.org/doc/libs/1_79_0/more/getting_started/unix-variants.html
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[flowStarted flowId='${LPM_IMAGE_ARCHITECTURE}-boost']"
   echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Boost']"
 else
   echo
   print_msg "Install Libpointmatcher dependencies › 'Boost'"
   echo
 fi
-
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
@@ -112,7 +96,6 @@ sudo apt-get update &&
 
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
   echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Boost']"
-  echo "##teamcity[flowFinished flowId='${LPM_IMAGE_ARCHITECTURE}-boost']"
 fi
 
 
