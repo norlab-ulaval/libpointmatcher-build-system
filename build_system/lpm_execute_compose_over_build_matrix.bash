@@ -184,19 +184,8 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
     for EACH_OS_VERSION in "${CRAWL_OS_VERSIONS[@]}"; do
 
 #      export LPM_JOB_ID=${LPM_JOB_ID}
-
       SHOW_SPLASH_EC='false'
 
-      # (Priority) ToDo: on task end >> delete next bloc ↓↓
-#      IS_TEAMCITY_RUN=${TEAMCITY_VERSION:-false} && echo "\$TEAMCITY_VERSION=${TEAMCITY_VERSION} \$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
-#
-      if [[ ${TEAMCITY_VERSION:-false} != false ]]; then
-        print_msg_warning "\$TEAMCITY_VERSION=${TEAMCITY_VERSION}"
-      else
-        print_msg_warning "Not a teamcity run"
-        print_msg_warning "printenv | grep -i -e TEAM*"
-        printenv | grep -i -e TEAM*
-      fi
 
       echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_execute_compose.bash' description='${MSG_DIMMED_FORMAT_TEAMCITY} --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT_TEAMCITY}|n']"
 

@@ -62,6 +62,14 @@ function print_help_in_terminal() {
 #      --job-id                                Append job ID for CI test image
 }
 
+# ....TeamCity service message logic................................................................................
+if [[ ${TEAMCITY_VERSION} ]]; then
+  export IS_TEAMCITY_RUN=true
+  TC_VERSION="\$TEAMCITY_VERSION=${TEAMCITY_VERSION}"
+else
+  export IS_TEAMCITY_RUN=false
+fi
+print_msg "\$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN} ${TC_VERSION}"
 
 # ====Begin========================================================================================================
 SHOW_SPLASH_EC="${SHOW_SPLASH_EC:-true}"

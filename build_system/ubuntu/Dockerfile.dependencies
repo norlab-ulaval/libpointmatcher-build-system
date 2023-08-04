@@ -15,8 +15,12 @@ ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND}
 ENV TZ=Etc/UTC
 
 #ENV TERM="xterm"
-ENV TERM=${TERM:-"xterm-color"}
+#ENV TERM=${TERM:-"xterm-color"}
+ENV TERM=${TERM:-"xterm-256color"}
 #ENV TERM="xterm-256color"
+
+ARG IS_TEAMCITY_RUN
+ENV IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN:-false}
 
 # ....Setup timezone and localization..............................................................................
 # change the locale from POSIX to UTF-8
