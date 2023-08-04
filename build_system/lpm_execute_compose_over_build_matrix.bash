@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 #
 # Execute build matrix on docker compose docker-compose.libpointmatcher.yaml
 #
@@ -216,6 +216,7 @@ Tag crawled:
 "
 for tag in "${IMAGE_TAG_CRAWLED[@]}" ; do
     echo -e "${MSG_DIMMED_FORMAT}   ${tag}${MSG_END_FORMAT}"
+    echo "##teamcity[addBuildTag '${tag}']"
 done
 
 print_formated_script_footer 'lpm_execute_compose_over_build_matrix.bash' "${LPM_LINE_CHAR_BUILDER_LVL1}"
