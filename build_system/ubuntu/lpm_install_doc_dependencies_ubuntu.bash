@@ -30,6 +30,14 @@ source ./function_library/terminal_splash.bash
 source ./lpm_utility_script/lpm_export_which_architecture.bash
 
 # ....TeamCity service message......................................................................................
+# (Priority) ToDo: on task end >> delete next bloc ↓↓
+if [[ ${TEAMCITY_VERSION:-false} != false ]]; then
+  print_msg_warning "\$TEAMCITY_VERSION=${TEAMCITY_VERSION}"
+else
+  print_msg_warning "Not a teamcity run"
+  print_msg_warning "printenv | grep -i -e TEAM*"
+  printenv | grep -i -e TEAM*
+fi
 # (NICE TO HAVE) ToDo: implement conditional step >> if run in teamcity only
 echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_install_doc_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
 
