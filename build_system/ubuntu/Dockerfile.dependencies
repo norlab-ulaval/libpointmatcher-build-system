@@ -56,6 +56,9 @@ RUN apt-get update && \
 # ====Begin========================================================================================================
 WORKDIR "${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}/build_system"
 
+COPY ./build_system/.env.prompt .
+COPY ./build_system/.env .
+COPY ./build_system/function_library/ ./function_library/
 COPY ./build_system/ubuntu/lpm_install_python_dev_tools.bash ./ubuntu/
 
 RUN chmod +x ./ubuntu/lpm_install_python_dev_tools.bash
@@ -72,9 +75,6 @@ RUN pip install --no-cache-dir --verbose teamcity-messages
 FROM base-image AS libpointmatcher-dependencies
 
 WORKDIR "${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}/build_system"
-
-COPY ./build_system/.env.prompt .
-COPY ./build_system/.env .
 
 COPY ./build_system/ubuntu/lpm_install_dependencies_ubuntu.bash ./ubuntu/
 COPY ./build_system/ubuntu/lpm_install_python_dev_tools.bash ./ubuntu/
