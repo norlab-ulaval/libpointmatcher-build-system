@@ -29,6 +29,23 @@ source ./function_library/terminal_splash.bash
 # Set environment variable LPM_IMAGE_ARCHITECTURE
 source ./lpm_utility_script/lpm_export_which_architecture.bash
 
+# ....TeamCity service message......................................................................................
+# (Priority) ToDo: on task end >> delete next bloc ↓↓
+#      IS_TEAMCITY_RUN=${TEAMCITY_VERSION:-false} && echo "\$TEAMCITY_VERSION=${TEAMCITY_VERSION} \$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
+#
+if [[ ${TEAMCITY_VERSION:-false} == false ]]; then
+  echo "\$TEAMCITY_VERSION=${TEAMCITY_VERSION} \$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
+  print_msg_warning "\$TEAMCITY_VERSION=${TEAMCITY_VERSION}"
+else
+  echo "\$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
+fi
+print_msg_warning "printenv | grep -i -e TEAM*"
+printenv | grep -i -e TEAM*
+
+
+# (NICE TO HAVE) ToDo: implement conditional step >> if run in teamcity only
+echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
+
 # ====Begin========================================================================================================
 SHOW_SPLASH_IDU="${SHOW_SPLASH_IDU:-true}"
 
@@ -161,6 +178,11 @@ sudo apt-get update &&
 
 print_msg_done "Libpointmatcher dependencies installed"
 print_formated_script_footer "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
+
+# ....TeamCity service message......................................................................................
+# (NICE TO HAVE) ToDo: implement conditional step >> if run in teamcity only
+echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
+
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
 

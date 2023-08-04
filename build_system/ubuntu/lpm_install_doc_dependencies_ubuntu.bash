@@ -29,6 +29,10 @@ source ./function_library/terminal_splash.bash
 # Set environment variable LPM_IMAGE_ARCHITECTURE
 source ./lpm_utility_script/lpm_export_which_architecture.bash
 
+# ....TeamCity service message......................................................................................
+# (NICE TO HAVE) ToDo: implement conditional step >> if run in teamcity only
+echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_install_doc_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
+
 # ====Begin========================================================================================================
 SHOW_SPLASH_IDDU="${SHOW_SPLASH_IDDU:-true}"
 
@@ -57,6 +61,11 @@ sudo apt-get update &&
 
 print_msg_done "Libpointmatcher documentation related dependencies installed"
 print_formated_script_footer "lpm_install_doc_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
+
+# ....TeamCity service message......................................................................................
+# (NICE TO HAVE) ToDo: implement conditional step >> if run in teamcity only
+echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute lpm_install_doc_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})']"
+
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
 

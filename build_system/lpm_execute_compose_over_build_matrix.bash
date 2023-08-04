@@ -167,7 +167,7 @@ ${MSG_DIMMED_FORMAT}    LPM_OSX_SUPPORTED_VERSIONS=(${FREEZED_LPM_OSX_SUPPORTED_
 "
 
 # Note: EACH_LPM_VERSION is used for container labeling and to fetch the repo at release tag (todo ref task NMO-252)
-# (Priority) ToDo: implement other OS support (ref task NMO-213 OsX arm64-Darwin and NMO-210 OsX x86 CD components)
+# iceboxed: implement other OS support (ref task NMO-213 OsX arm64-Darwin and NMO-210 OsX x86 CD components)
 for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
   for EACH_OS_NAME in "${FREEZED_LPM_SUPPORTED_OS[@]}"; do
@@ -187,7 +187,19 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       SHOW_SPLASH_EC='false'
 
-      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute script' description='${MSG_DIMMED_FORMAT_TEAMCITY} lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT_TEAMCITY}|n']"
+      # (Priority) ToDo: on task end >> delete next bloc ↓↓
+#      IS_TEAMCITY_RUN=${TEAMCITY_VERSION:-false} && echo "\$TEAMCITY_VERSION=${TEAMCITY_VERSION} \$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
+#
+      if [[ ${TEAMCITY_VERSION:-false} == false ]]; then
+        echo "\$TEAMCITY_VERSION=${TEAMCITY_VERSION} \$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
+        print_msg_warning "\$TEAMCITY_VERSION=${TEAMCITY_VERSION}"
+      else
+        echo "\$IS_TEAMCITY_RUN=${IS_TEAMCITY_RUN}"
+      fi
+      print_msg_warning "printenv | grep -i -e TEAM*"
+      printenv | grep -i -e TEAM*
+
+      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_execute_compose.bash' description='${MSG_DIMMED_FORMAT_TEAMCITY} --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT_TEAMCITY}|n']"
 
       echo " "
       source ./lpm_execute_compose.bash --libpointmatcher-version "${EACH_LPM_VERSION}" \
@@ -199,7 +211,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
       # Collect image tags exported by lpm_execute_compose.bash
       IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${LPM_IMAGE_TAG}")
 
-      echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute script']"
+      echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute lpm_execute_compose.bash']"
 
     done
   done
