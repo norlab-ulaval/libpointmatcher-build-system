@@ -80,8 +80,8 @@ if [[ "${SHOW_SPLASH_ILU}" == 'true' ]]; then
   norlab_splash "${LPM_SPLASH_NAME}" "https://github.com/${LPM_LIBPOINTMATCHER_SRC_DOMAIN}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 fi
 
-
 print_formated_script_header "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
+
 
 # ....Script command line flags....................................................................................
 
@@ -196,6 +196,8 @@ cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo \
 make -j $(nproc)
 sudo make install
 
+# Tag added to the TeamCity build via a service message
+echo "##teamcity[addBuildTag '${LPM_IMAGE_ARCHITECTURE}']"
 
 print_msg_done "Libpointmatcher installed at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
 print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
