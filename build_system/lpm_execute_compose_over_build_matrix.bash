@@ -187,9 +187,9 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       SHOW_SPLASH_EC='false'
 
-      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute compose' description='|n          ${MSG_DIMMED_FORMAT}lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT}']"
+      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute script' description='|n          lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}']"
 
-      echo "##teamcity[notification notifier='slack' message='(STARTED) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='norlab-teamcity-server-libpointmatcher']"
+      echo "##teamcity[notification notifier='slack' message='(STARTED) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='C05L7TDC9GA'  connectionId='4758280501.5091580623393']"
 
       source ./lpm_execute_compose.bash --libpointmatcher-version "${EACH_LPM_VERSION}" \
                                         --os-name "${EACH_OS_NAME}" \
@@ -200,7 +200,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
       # Collect image tags exported by lpm_execute_compose.bash
       IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${LPM_IMAGE_TAG}")
 
-      echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute compose']"
+      echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} execute script']"
       echo "##teamcity[notification notifier='slack' message='(DONE) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='norlab-teamcity-server-libpointmatcher']"
 
     done
