@@ -139,14 +139,14 @@ git clone https://github.com/ethz-asl/libnabo.git &&
   mkdir build && cd build
 
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationStarted compiler='cmake']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationStarted compiler='${MSG_BASE_TEAMCITY} ${MSG_LPM_STEP_FORMAT_TEAMCITY}cmake']"; fi
 
 cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo .. &&
   make -j $(nproc) &&
 #  make test &&              # (CRITICAL) ToDo: on task end >> unmute this line ←
   sudo make install
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished compiler='cmake']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished compiler='${MSG_BASE_TEAMCITY} ${MSG_LPM_STEP_FORMAT_TEAMCITY}cmake']"; fi
 
 
 #    && git checkout 1.0.7 \
