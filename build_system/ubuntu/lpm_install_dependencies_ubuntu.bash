@@ -41,9 +41,9 @@ print_formated_script_header "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_
 # ................................................................................................................
 echo
 print_msg "Install development utilities"
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install development utilities']"; fi
 echo
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install development utilities (${LPM_IMAGE_ARCHITECTURE})']"; fi
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
@@ -78,37 +78,37 @@ source ./ubuntu/lpm_install_python_dev_tools.bash
 #        python3-vcstool \
 #    && sudo rm -rf /var/lib/apt/lists/*;
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install development utilities (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install development utilities']"; fi
 
 # ................................................................................................................
 echo
 print_msg "Install Libpointmatcher dependencies › 'Boost'"
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Boost']"; fi
 echo
 # https://www.boost.org/doc/libs/1_79_0/more/getting_started/unix-variants.html
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Boost (${LPM_IMAGE_ARCHITECTURE})']"; fi
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libboost-all-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Boost (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Boost']"; fi
 
 # ................................................................................................................
 echo
 print_msg "Install Libpointmatcher dependencies › 'Eigen'"
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Eigen']"; fi
 echo
 # https://eigen.tuxfamily.org/index.php
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Eigen (${LPM_IMAGE_ARCHITECTURE})']"; fi
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libeigen3-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Eigen (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Eigen']"; fi
 
 # ................................................................................................................
 print_msg "Create required dir structure"
@@ -117,10 +117,10 @@ mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 # ................................................................................................................
 echo
 print_msg "Install Libpointmatcher dependencies › 'Libnabo'"
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Libnabo']"; fi
 echo
 # https://github.com/ethz-asl/libnabo
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Libnabo (${LPM_IMAGE_ARCHITECTURE})']"; fi
 
 # ToDo: assessment >> ANN and FLANN should be required only for `make test` benchmarks
 
@@ -153,14 +153,14 @@ git clone https://github.com/ethz-asl/libnabo.git &&
   mkdir build && cd build
 
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationStarted compiler='${MSG_BASE_HIGHLIGHTED_TEAMCITY} cmake (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationStarted compiler='${MSG_BASE_HIGHLIGHTED_TEAMCITY} cmake']"; fi
 
 cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo .. &&
   make -j $(nproc) &&
 #  make test &&              # (CRITICAL) ToDo: on task end >> unmute this line ←
   sudo make install
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished compiler='${MSG_BASE_HIGHLIGHTED_TEAMCITY} cmake (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished compiler='${MSG_BASE_HIGHLIGHTED_TEAMCITY} cmake']"; fi
 
 
 #    && git checkout 1.0.7 \
@@ -168,19 +168,20 @@ if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished c
 # ToDo:on task end >> next bloc ↓↓
 #pwd && tree -L 3
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Libnabo (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Libnabo']"; fi
 
 # ................................................................................................................
+echo
 print_msg "Install libpointmatcher dev tools"
-
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dev tools (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dev tools']"; fi
+echo
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libyaml-cpp-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dev tools (${LPM_IMAGE_ARCHITECTURE})']"; fi
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dev tools']"; fi
 
 
 ## Tag added to the TeamCity build via a service message
@@ -188,8 +189,6 @@ if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Ins
 
 print_msg_done "Libpointmatcher dependencies installed"
 print_formated_script_footer "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
-
-
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
 
