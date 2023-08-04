@@ -199,6 +199,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
       IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${LPM_IMAGE_TAG}")
 
       echo "##teamcity[blockClosed name='${MSG_BASE} execute compose']"
+      echo "##teamcity[notification notifier='slack' message='(DONE) `lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}`' sendTo='C05L7TDC9GA']"
 
     done
   done
