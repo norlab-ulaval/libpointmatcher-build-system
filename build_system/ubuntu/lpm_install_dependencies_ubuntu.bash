@@ -43,6 +43,8 @@ echo
 print_msg "Install development utilities"
 echo
 
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install development utilities']"; fi
+
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     lsb-release \
@@ -76,16 +78,22 @@ source ./ubuntu/lpm_install_python_dev_tools.bash
 #        python3-vcstool \
 #    && sudo rm -rf /var/lib/apt/lists/*;
 
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install development utilities']"; fi
+
 # ................................................................................................................
 echo
 print_msg "Install Libpointmatcher dependencies › 'Boost'"
 echo
 # https://www.boost.org/doc/libs/1_79_0/more/getting_started/unix-variants.html
 
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Boost']"; fi
+
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libboost-all-dev &&
   sudo rm -rf /var/lib/apt/lists/*
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Boost']"; fi
 
 # ................................................................................................................
 echo
@@ -93,10 +101,14 @@ print_msg "Install Libpointmatcher dependencies › 'Eigen'"
 echo
 # https://eigen.tuxfamily.org/index.php
 
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Eigen']"; fi
+
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libeigen3-dev &&
   sudo rm -rf /var/lib/apt/lists/*
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Eigen']"; fi
 
 # ................................................................................................................
 print_msg "Create required dir structure"
@@ -107,6 +119,8 @@ echo
 print_msg "Install Libpointmatcher dependencies › 'Libnabo'"
 echo
 # https://github.com/ethz-asl/libnabo
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dependencies › Libnabo']"; fi
 
 # ToDo: assessment >> ANN and FLANN should be required only for `make test` benchmarks
 
@@ -154,13 +168,19 @@ if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished c
 # ToDo:on task end >> next bloc ↓↓
 #pwd && tree -L 3
 
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dependencies › Libnabo']"; fi
+
 # ................................................................................................................
 print_msg "Install libpointmatcher dev tools"
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockOpened name='Install Libpointmatcher dev tools']"; fi
 
 sudo apt-get update &&
   sudo apt-get install --assume-yes \
     libyaml-cpp-dev &&
   sudo rm -rf /var/lib/apt/lists/*
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[blockClosed name='Install Libpointmatcher dev tools']"; fi
 
 
 ## Tag added to the TeamCity build via a service message
