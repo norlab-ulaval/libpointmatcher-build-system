@@ -29,11 +29,6 @@ source ./function_library/terminal_splash.bash
 # Set environment variable LPM_IMAGE_ARCHITECTURE
 source ./lpm_utility_script/lpm_export_which_architecture.bash
 
-# ....TeamCity service message......................................................................................
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} ${MSG_WARNING_FORMAT_TEAMCITY}execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})${MSG_END_FORMAT_TEAMCITY}']"
-fi
-
 # ====Begin========================================================================================================
 SHOW_SPLASH_IDU="${SHOW_SPLASH_IDU:-true}"
 
@@ -141,11 +136,18 @@ echo
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
 git clone https://github.com/ethz-asl/libnabo.git &&
   cd libnabo &&
-  mkdir build && cd build &&
-  cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo .. &&
+  mkdir build && cd build
+
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationStarted compiler='cmake']"; fi
+
+cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo .. &&
   make -j $(nproc) &&
 #  make test &&              # (CRITICAL) ToDo: on task end >> unmute this line ←
   sudo make install
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished compiler='cmake']"; fi
+
 
 #    && git checkout 1.0.7 \
 
@@ -167,10 +169,6 @@ sudo apt-get update &&
 print_msg_done "Libpointmatcher dependencies installed"
 print_formated_script_footer "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 
-# ....TeamCity service message......................................................................................
-if [[ ${IS_TEAMCITY_RUN} == true ]]; then
-  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} ${MSG_WARNING_FORMAT_TEAMCITY}execute lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})${MSG_END_FORMAT_TEAMCITY}']"
-fi
 
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
