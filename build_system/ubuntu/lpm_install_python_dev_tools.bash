@@ -22,10 +22,12 @@ source ./function_library/general_utilities.bash
 # ====Install python version based on ubuntu distro================================================================
 if [[ $(uname) == 'Linux' ]]; then
 
+  sudo update-ca-certificates
+
   # Retrieve ubuntu version number
   source /etc/lsb-release
 
-  print_msg_warning "Ubuntu version is ${DISTRIB_RELEASE}"
+  print_msg "Ubuntu version is ${DISTRIB_RELEASE}"
   if [[ ${DISTRIB_RELEASE} == '18.04' ]]; then
 
     # ....Case › Ubuntu bionic ==> python 2........................................................................
