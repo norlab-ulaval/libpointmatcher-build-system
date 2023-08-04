@@ -42,7 +42,7 @@ source .env.prompt
 set +o allexport
 
 # ....Helper function..............................................................................................
-# import shell functions from Libpointmatcher-build-system utilities library
+## import shell functions from Libpointmatcher-build-system utilities library
 source ./function_library/prompt_utilities.bash
 source ./function_library/general_utilities.bash
 source ./function_library/terminal_splash.bash

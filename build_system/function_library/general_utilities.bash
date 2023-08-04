@@ -25,7 +25,7 @@ source .env.prompt
 set +o allexport
 
 # ....Load helper function.........................................................................................
-# import shell functions from utilities library
+## import shell functions from Libpointmatcher-build-system utilities library
 source ./function_library/prompt_utilities.bash
 
 # =================================================================================================================
@@ -58,8 +58,8 @@ function show_and_execute_docker() {
 }
 
 # =================================================================================================================
-# Send TeamCity blockOpened/blockClosed service message or print the message to console
-#   when executed outside a TeamCity Agent run.
+# Send TeamCity blockOpened/blockClosed service message
+#   or print the message to console when executed outside a TeamCity Agent run.
 #
 # Usage:
 #   $ teamcity_service_msg_blockOpened "<theMessage>"
@@ -71,12 +71,14 @@ function show_and_execute_docker() {
 #   Read|write  'CURRENT_BLOCK_SERVICE_MSG'
 # Outputs:
 #   Output either
-#     - a TeamCity blockOpened service message
+#     - a TeamCity blockOpened/blockClosed service message
 #     - or print to console
 #     - or an error if teamcity_service_msg_blockOpened is not closed using teamcity_service_msg_blockClosed
 #
+# Reference:
+#   - TeamCity doc: https://www.jetbrains.com/help/teamcity/service-messages.html#Blocks+of+Service+Messages
+#
 # =================================================================================================================
-# ....BLOC service message..........................................................................................
 function teamcity_service_msg_blockOpened() {
   local THE_MSG=$1
   if [[ ${CURRENT_BLOCK_SERVICE_MSG} ]]; then
@@ -100,7 +102,28 @@ function teamcity_service_msg_blockClosed() {
   unset CURRENT_BLOCK_SERVICE_MSG
 }
 
-# ....COMPILATION service message..................................................................................
+# =================================================================================================================
+# Send TeamCity compilationStarted/compilationFinished service message
+#   or print the message to console when executed outside a TeamCity Agent run.
+#
+# Usage:
+#   $ teamcity_service_msg_compilationStarted "<theMessage>"
+#   $ ... many compilation steps ...
+#   $ teamcity_service_msg_compilationFinished
+#
+# Globals:
+#   Read        'IS_TEAMCITY_RUN'
+#   Read|write  'CURRENT_COMPILATION_SERVICE_MSG_COMPILER'
+# Outputs:
+#   Output either
+#     - a TeamCity compilationStarted/compilationFinished service message
+#     - or print to console
+#     - or an error if teamcity_service_msg_compilationStarted is not closed using teamcity_service_msg_compilationFinished
+#
+# Reference:
+#   - TeamCity doc: https://www.jetbrains.com/help/teamcity/service-messages.html#Reporting+Compilation+Messages
+#
+# =================================================================================================================
 function teamcity_service_msg_compilationStarted() {
   local THE_MSG=$1
   if [[ ${CURRENT_COMPILATION_SERVICE_MSG_COMPILER} ]]; then
@@ -123,4 +146,3 @@ function teamcity_service_msg_compilationFinished() {
   # Reset the variable since the bloc is closed
   unset CURRENT_COMPILATION_SERVICE_MSG_COMPILER
 }
-

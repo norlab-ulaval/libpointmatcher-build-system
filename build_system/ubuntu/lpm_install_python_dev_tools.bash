@@ -7,13 +7,29 @@
 #
 set -e
 
+# ....Project root logic...........................................................................................
+TMP_CWD=$(pwd)
+
+if [[ "$(basename $(pwd))" != "build_system" ]]; then
+  cd ../
+fi
+
+
+# ....Helper function..............................................................................................
+## import shell functions from Libpointmatcher-build-system utilities library
+source ./function_library/prompt_utilities.bash
+source ./function_library/general_utilities.bash
+
 # .................................................................................................................
 if [[ $(uname) == 'Linux' ]]; then
+
+  teamcity_service_msg_blockOpened "Install python development tools"
 
   # Retrieve ubuntu version number
   UBUNTU_VERSION=$(grep '^VERSION_ID' /etc/os-release)
   if [[ ${UBUNTU_VERSION} == '18.04' ]]; then
     # Case: Ubuntu 18.04 (bionic) ==> python 2
+
 
     sudo apt-get update &&
       sudo apt-get install --assume-yes \
@@ -24,6 +40,7 @@ if [[ $(uname) == 'Linux' ]]; then
     # Work around to install pip in python2
     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
     sudo python2 get-pip.py
+
 
   else
 
@@ -46,4 +63,11 @@ if [[ $(uname) == 'Linux' ]]; then
     python3 -m pip install --upgrade pip
 
   fi
+
+  teamcity_service_msg_blockClosed
+
 fi
+
+# ====Teardown=====================================================================================================
+cd "${TMP_CWD}"
+
