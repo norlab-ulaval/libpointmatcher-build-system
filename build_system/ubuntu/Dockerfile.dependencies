@@ -50,7 +50,8 @@ RUN apt-get update && \
         wget \
         gnupg2 \
         zip gzip tar unzip \
-        net-tools && \
+        net-tools \
+        apt-utils && \
     rm -rf /var/lib/apt/lists/*
 
 # ====Begin========================================================================================================
