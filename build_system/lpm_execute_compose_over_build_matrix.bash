@@ -187,7 +187,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[@]}"; do
 
       SHOW_SPLASH_EC='false'
 
-      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute compose' description='|r          lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}']"
+      echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute compose' description='|n          ${MSG_DIMMED_FORMAT}lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT}']"
 
       echo "##teamcity[notification notifier='slack' message='(STARTED) lpm_execute_compose.bash --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}' sendTo='norlab-teamcity-server-libpointmatcher']"
 
