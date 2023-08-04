@@ -59,9 +59,13 @@ cmake --version
 
 teamcity_service_msg_blockClosed
 # ................................................................................................................
-teamcity_service_msg_blockOpened "Install development utilities (python)"
 
-source ./ubuntu/lpm_install_python_dev_tools.bash
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then
+  print_msg "The install script is run in teamCity >> the python install step was executed earlier in the Dockerfile.dependencies"
+else
+  print_msg "The install script is executed in stand alone mode"
+  source ./ubuntu/lpm_install_python_dev_tools.bash
+fi
 
 ## ToDo: assessment >> check if next bloc ↓↓ is needed
 #sudo apt-get update \
@@ -72,7 +76,6 @@ source ./ubuntu/lpm_install_python_dev_tools.bash
 #        python3-vcstool \
 #    && sudo rm -rf /var/lib/apt/lists/*;
 
-teamcity_service_msg_blockClosed
 # ................................................................................................................
 teamcity_service_msg_blockOpened "Install Libpointmatcher dependencies › Boost"
 # https://www.boost.org/doc/libs/1_79_0/more/getting_started/unix-variants.html
