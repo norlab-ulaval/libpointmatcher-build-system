@@ -39,7 +39,7 @@ fi
 print_formated_script_header "lpm_install_dependencies_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 
 # ................................................................................................................
-teamcity_service_msg_block_open "Install development utilities"
+teamcity_service_msg_blockOpened "Install development utilities"
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install development utilities']"
 #else
@@ -65,13 +65,13 @@ sudo apt-get update &&
 
 cmake --version
 
-teamcity_service_msg_block_close
+teamcity_service_msg_blockClosed
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install development utilities']"
 #fi
 
 # ................................................................................................................
-teamcity_service_msg_block_open "Install development utilities (python)"
+teamcity_service_msg_blockOpened "Install development utilities (python)"
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install development utilities (python)']"
 #fi
@@ -87,7 +87,7 @@ source ./ubuntu/lpm_install_python_dev_tools.bash
 #        python3-vcstool \
 #    && sudo rm -rf /var/lib/apt/lists/*;
 
-teamcity_service_msg_block_close
+teamcity_service_msg_blockClosed
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install development utilities (python)']"
 #fi
@@ -95,7 +95,7 @@ teamcity_service_msg_block_close
 
 # ................................................................................................................
 # https://www.boost.org/doc/libs/1_79_0/more/getting_started/unix-variants.html
-teamcity_service_msg_block_open "Install Libpointmatcher dependencies › Boost"
+teamcity_service_msg_blockOpened "Install Libpointmatcher dependencies › Boost"
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Boost']"
 #else
@@ -109,14 +109,14 @@ sudo apt-get update &&
     libboost-all-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-teamcity_service_msg_block_close
+teamcity_service_msg_blockClosed
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Boost']"
 #fi
 
 # ................................................................................................................
 # https://eigen.tuxfamily.org/index.php
-teamcity_service_msg_block_open "Install Libpointmatcher dependencies › Eigen"
+teamcity_service_msg_blockOpened "Install Libpointmatcher dependencies › Eigen"
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Eigen']"
 #else
@@ -130,7 +130,7 @@ sudo apt-get update &&
     libeigen3-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-teamcity_service_msg_block_close
+teamcity_service_msg_blockClosed
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Eigen']"
 #fi
@@ -138,7 +138,7 @@ teamcity_service_msg_block_close
 
 # ................................................................................................................
 # https://github.com/ethz-asl/libnabo
-teamcity_service_msg_block_open "Install Libpointmatcher dependencies › Libnabo"
+teamcity_service_msg_blockOpened "Install Libpointmatcher dependencies › Libnabo"
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Libnabo']"
 #else
@@ -193,13 +193,13 @@ cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo .. &&
 teamcity_service_msg_compilationFinished
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then echo "##teamcity[compilationFinished compiler='${MSG_BASE_TEAMCITY} cmake']"; fi
 
-teamcity_service_msg_block_close
+teamcity_service_msg_blockClosed
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dependencies › Libnabo']"
 #fi
 
 # ................................................................................................................
-teamcity_service_msg_block_open "Install Libpointmatcher dev tools"
+teamcity_service_msg_blockOpened "Install Libpointmatcher dev tools"
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dev tools']"
 #else
@@ -213,7 +213,7 @@ sudo apt-get update &&
     libyaml-cpp-dev &&
   sudo rm -rf /var/lib/apt/lists/*
 
-teamcity_service_msg_block_close
+teamcity_service_msg_blockClosed
 #if [[ ${IS_TEAMCITY_RUN} == true ]]; then
 #  echo "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} Install Libpointmatcher dev tools']"
 #fi
