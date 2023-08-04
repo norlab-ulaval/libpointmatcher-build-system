@@ -16,11 +16,13 @@ services:
   dependencies-amd64:
     extends: dependencies
     build:
-      platforms: "linux/amd64"
+      platforms:
+        - "linux/amd64"
   dependencies-arm64v8:
     extends: dependencies
     build:
-      platforms: "linux/arm64/v8"
+      platforms:
+        - "linux/arm64/v8"
   dependencies-doc:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-dependencies-doc:${LPM_IMAGE_TAG:?err}
     build:
