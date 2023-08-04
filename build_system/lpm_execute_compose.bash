@@ -148,10 +148,15 @@ export DEPENDENCIES_BASE_IMAGE_TAG="${OS_VERSION}"
 
 # ToDo: implement case (ref task NMO-225 ⚒︎ → Docker image multi-arch support) >> remove the target arch from the tag. L4T will be used in the OS tag
 #export LPM_IMAGE_TAG="${LIBPOINTMATCHER_VERSION}-${DEPENDENCIES_BASE_IMAGE}${DEPENDENCIES_BASE_IMAGE_TAG}-${LPM_IMAGE_ARCHITECTURE:?'err: variable not set'}"
-export LPM_IMAGE_TAG="${LIBPOINTMATCHER_VERSION}-${DEPENDENCIES_BASE_IMAGE}${DEPENDENCIES_BASE_IMAGE_TAG}"
+export LPM_IMAGE_TAG="${LIBPOINTMATCHER_VERSION}-${DEPENDENCIES_BASE_IMAGE}-${DEPENDENCIES_BASE_IMAGE_TAG}"
 
 print_msg "Image tag ${MSG_DIMMED_FORMAT}${LPM_IMAGE_TAG}${MSG_END_FORMAT}"
-print_msg "Environment variables set for this build run:\n\n${MSG_DIMMED_FORMAT}$(printenv | grep -i -e LPM_ -e DEPENDENCIES_BASE_IMAGE -e BUILDKIT)${MSG_END_FORMAT}\n"
+print_msg "Environment variables set by compose:\n\n
+${MSG_DIMMED_FORMAT}    LIBPOINTMATCHER_VERSION=${LIBPOINTMATCHER_VERSION}          ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}    DEPENDENCIES_BASE_IMAGE=${DEPENDENCIES_BASE_IMAGE}          ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}    DEPENDENCIES_BASE_IMAGE_TAG=${DEPENDENCIES_BASE_IMAGE_TAG}  ${MSG_END_FORMAT}
+\n"
+#${MSG_DIMMED_FORMAT}$(printenv | grep -i -e LPM_ -e DEPENDENCIES_BASE_IMAGE -e BUILDKIT)${MSG_END_FORMAT}
 
 ## docker compose [-f <theComposeFile> ...] [options] [COMMAND] [ARGS...]
 ## docker compose [-f <theComposeFile> ...] build --no-cache --push
@@ -160,6 +165,12 @@ print_msg "Environment variables set for this build run:\n\n${MSG_DIMMED_FORMAT}
 
 show_and_execute_docker "compose -f docker-compose.libpointmatcher.yaml ${DOCKER_COMPOSE_CMD_ARGS}"
 
+print_msg "Image tag ${MSG_DIMMED_FORMAT}${LPM_IMAGE_TAG}${MSG_END_FORMAT}"
+print_msg "Environment variables used by compose:\n\n
+${MSG_DIMMED_FORMAT}    LIBPOINTMATCHER_VERSION=${LIBPOINTMATCHER_VERSION}          ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}    DEPENDENCIES_BASE_IMAGE=${DEPENDENCIES_BASE_IMAGE}          ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}    DEPENDENCIES_BASE_IMAGE_TAG=${DEPENDENCIES_BASE_IMAGE_TAG}  ${MSG_END_FORMAT}
+"
 print_formated_script_footer 'lpm_execute_compose.bash' "${LPM_LINE_CHAR_BUILDER_LVL2}"
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

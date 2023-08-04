@@ -194,25 +194,23 @@ done
 
 
 # ToDo: on task end >> delete next bloc ↓↓
-echo -e " ${MSG_DIMMED_FORMAT}
-FREEZED_LPM_LIBPOINTMATCHER_VERSIONS=(${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[*]})
-FREEZED_LPM_SUPPORTED_OS=(${FREEZED_LPM_SUPPORTED_OS[*]})
-FREEZED_LPM_UBUNTU_SUPPORTED_VERSIONS=(${FREEZED_LPM_UBUNTU_SUPPORTED_VERSIONS[*]})
-FREEZED_LPM_OSX_SUPPORTED_VERSIONS=(${FREEZED_LPM_OSX_SUPPORTED_VERSIONS[*]})
-${MSG_END_FORMAT} "
+echo -e "
+${MSG_DIMMED_FORMAT}FREEZED_LPM_LIBPOINTMATCHER_VERSIONS=(${FREEZED_LPM_LIBPOINTMATCHER_VERSIONS[*]}) ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}FREEZED_LPM_SUPPORTED_OS=(${FREEZED_LPM_SUPPORTED_OS[*]}) ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}FREEZED_LPM_UBUNTU_SUPPORTED_VERSIONS=(${FREEZED_LPM_UBUNTU_SUPPORTED_VERSIONS[*]}) ${MSG_END_FORMAT}
+${MSG_DIMMED_FORMAT}FREEZED_LPM_OSX_SUPPORTED_VERSIONS=(${FREEZED_LPM_OSX_SUPPORTED_VERSIONS[*]}) ${MSG_END_FORMAT}
+"
 
 
 
 print_msg_done "FINAL › Build matrix completed with command
-${MSG_DIMMED_FORMAT}
-      $ docker compose -f docker-compose.libpointmatcher.yaml ${DOCKER_COMPOSE_CMD_ARGS}
-${MSG_END_FORMAT}
-Tag crawled:
-${MSG_DIMMED_FORMAT}"
+
+${MSG_DIMMED_FORMAT}    $ docker compose -f docker-compose.libpointmatcher.yaml ${DOCKER_COMPOSE_CMD_ARGS} ${MSG_END_FORMAT}
+
+Tag crawled:"
 for tag in "${IMAGE_TAG_CRAWLED[@]}" ; do
-    echo -e "   ${tag}"
+    echo -e "${MSG_DIMMED_FORMAT}   ${tag}${MSG_END_FORMAT}"
 done
-echo -e "${MSG_END_FORMAT}"
 
 print_formated_script_footer 'lpm_execute_compose_over_build_matrix.bash' "${LPM_LINE_CHAR_BUILDER_LVL1}"
 # ====Teardown=====================================================================================================
