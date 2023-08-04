@@ -23,8 +23,10 @@ source ./function_library/general_utilities.bash
 if [[ $(uname) == 'Linux' ]]; then
 
   # Retrieve ubuntu version number
-  UBUNTU_VERSION=$(grep '^VERSION_ID' /etc/os-release)
-  if [[ ${UBUNTU_VERSION} == '18.04' ]]; then
+  source /etc/lsb-release
+
+  print_msg_warning "Ubuntu version is ${DISTRIB_RELEASE}"
+  if [[ ${DISTRIB_RELEASE} == '18.04' ]]; then
 
     # ....Case › Ubuntu bionic ==> python 2........................................................................
     teamcity_service_msg_blockOpened "Install python development tools for Ubuntu distro (python 2)"
@@ -45,7 +47,7 @@ if [[ $(uname) == 'Linux' ]]; then
   else
     teamcity_service_msg_blockOpened "Install python development tools for Ubuntu distro (python 3)"
 
-    if [[ ${UBUNTU_VERSION} == '20.04' ]]; then
+    if [[ ${DISTRIB_RELEASE} == '20.04' ]]; then
       # ....Case › Ubuntu distro still have to deal with python 2 legacy code.....................................
       sudo apt-get update &&
         sudo apt-get install --assume-yes \
