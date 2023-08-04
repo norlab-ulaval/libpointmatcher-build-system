@@ -14,7 +14,6 @@ if [[ "$(basename $(pwd))" != "build_system" ]]; then
   cd ../
 fi
 
-
 # ....Helper function..............................................................................................
 ## import shell functions from Libpointmatcher-build-system utilities library
 source ./function_library/prompt_utilities.bash
@@ -30,7 +29,7 @@ if [[ $(uname) == 'Linux' ]]; then
   if [[ ${UBUNTU_VERSION} == '18.04' ]]; then
     # Case: Ubuntu 18.04 (bionic) ==> python 2
 
-    # ....Case › Ubuntu melodic....................................................................................
+    # ....Case › Ubuntu bionic ==> python 2........................................................................
     sudo apt-get update &&
       sudo apt-get install --assume-yes \
         python-dev \
@@ -43,18 +42,6 @@ if [[ $(uname) == 'Linux' ]]; then
 
   else
 
-    # ....Case › python 3 is Ubuntu default python version.........................................................
-    sudo apt-get update &&
-      sudo apt-get install --assume-yes \
-        python3-dev \
-        python3-numpy &&
-      sudo rm -rf /var/lib/apt/lists/*
-
-      # python3-pip \
-      # python3-opengl \
-
-    python3 -m pip install --upgrade pip
-
     # ....Case › Ubuntu distro still have to deal with python 2 legacy code........................................
     if [[ ${UBUNTU_VERSION} == '20.04' ]]; then
       sudo apt-get update &&
@@ -63,6 +50,19 @@ if [[ $(uname) == 'Linux' ]]; then
         sudo rm -rf /var/lib/apt/lists/*
     fi
 
+    # ....Case › python 3 is Ubuntu default python version.........................................................
+    sudo apt-get update &&
+      sudo apt-get install --assume-yes \
+        python3-dev \
+        python3-pip \
+        python3-numpy &&
+      sudo rm -rf /var/lib/apt/lists/*
+
+    # python3-opengl \
+
+    # python3 -m pip install --upgrade pip
+    pip install --no-cache-dir --upgrade pip
+
   fi
   teamcity_service_msg_blockClosed
 fi
@@ -70,14 +70,11 @@ fi
 # ====Install TeamCity and CI/CD utilities==========================================================================
 if [[ ${IS_TEAMCITY_RUN} == true ]]; then
   teamcity_service_msg_blockOpened "Install TeamCity and CI/CD python tools"
-  pip install --no-cache-dir --upgrade pip pytest
-#  pip install --no-cache-dir --upgrade pytest
+  # Note: dont hardcode 'pip' version (2 vs 3) as this step is also used by bionic distro
+  pip install --no-cache-dir --upgrade pytest
   pip install --no-cache-dir teamcity-messages
   teamcity_service_msg_blockClosed
 fi
 
-
-
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
-
