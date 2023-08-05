@@ -185,7 +185,7 @@ fi
 
 print_msg_warning "pwd=$(pwd)"
 tree -agu -L 2
-
+echo "whoami=$(whoami), groups=$(groups)"
 
 cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 REPO_ABS_PATH=$(pwd)
