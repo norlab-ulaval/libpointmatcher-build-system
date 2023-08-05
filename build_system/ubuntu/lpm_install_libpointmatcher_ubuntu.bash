@@ -161,6 +161,11 @@ done
 teamcity_service_msg_blockOpened "Install Libpointmatcher"
 # https://github.com/ethz-asl/libpointmatcher/tree/master
 
+
+print_msg_warning "pwd=$(pwd)"
+tree -a -L 3
+
+
 mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
 
@@ -179,10 +184,13 @@ if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
   fi
 fi
 
+print_msg_warning "pwd=$(pwd)"
+tree -a -L 3
+
 
 cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 REPO_ABS_PATH=$(pwd)
-mkdir build && cd build
+mkdir -p build && cd build
 
 teamcity_service_msg_compilationStarted "cmake"
 # (CRITICAL) ToDo: validate >> REPO_ABS_PATH
