@@ -165,7 +165,7 @@ mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
 
 print_msg_warning "pwd=$(pwd)"
-tree -a -L 2
+tree -agu -L 2
 
 
 if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
@@ -184,7 +184,7 @@ if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
 fi
 
 print_msg_warning "pwd=$(pwd)"
-tree -a -L 2
+tree -agu -L 2
 
 
 cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
@@ -192,7 +192,7 @@ REPO_ABS_PATH=$(pwd)
 mkdir -p build && cd build
 
 
-tree -a -L 2 -- "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
+tree -agu -L 2 -- "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 
 
 teamcity_service_msg_compilationStarted "cmake"
