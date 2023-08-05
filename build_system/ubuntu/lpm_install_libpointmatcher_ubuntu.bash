@@ -207,24 +207,24 @@ mkdir -p build && cd build
 tree -agu -L 2 -- "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 
 
-#teamcity_service_msg_compilationStarted "cmake"
-## (CRITICAL) ToDo: validate >> REPO_ABS_PATH
-## (CRITICAL) ToDo: validate >> GENERATE_API_DOC install dir
-#
-#cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo \
-#  echo " " && -D BUILD_TESTS=${BUILD_TESTS_FLAG} \
-#  -D GENERATE_API_DOC=${GENERATE_API_DOC_FLAG} \
-#  ${REPO_ABS_PATH}
-#
-##   -DCMAKE_INSTALL_PREFIX=/usr/local/ \
-#
-#make -j $(nproc)
-#sudo make install
-#
-#teamcity_service_msg_compilationFinished
-#teamcity_service_msg_blockClosed
-#
-#echo " " && print_msg_done "Libpointmatcher installed at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
-#print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
-## ====Teardown=====================================================================================================
-#cd "${TMP_CWD}"
+teamcity_service_msg_compilationStarted "cmake"
+# (CRITICAL) ToDo: validate >> REPO_ABS_PATH
+# (CRITICAL) ToDo: validate >> GENERATE_API_DOC install dir
+
+cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+  echo " " && -D BUILD_TESTS=${BUILD_TESTS_FLAG} \
+  -D GENERATE_API_DOC=${GENERATE_API_DOC_FLAG} \
+  ${REPO_ABS_PATH}
+
+#   -DCMAKE_INSTALL_PREFIX=/usr/local/ \
+
+make -j $(nproc)
+sudo make install
+
+teamcity_service_msg_compilationFinished
+teamcity_service_msg_blockClosed
+
+echo " " && print_msg_done "Libpointmatcher installed at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
+print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
+# ====Teardown=====================================================================================================
+cd "${TMP_CWD}"
