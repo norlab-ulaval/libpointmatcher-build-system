@@ -43,6 +43,10 @@ source ./.env
 source ./.env.prompt
 set +o allexport
 
+# ToDo: on task end >> unmute next bloc ↓↓
+print_msg_warning "TMP_CWD=${TMP_CWD}"
+printenv
+
 ## skip GUI dialog by setting everything to default
 #export DEBIAN_FRONTEND=noninteractive
 
@@ -157,6 +161,11 @@ done
 ##echo "printenv" && printenv # ToDo: on task end >> delete this line ←
 
 
+# ToDo: on task end >> unmute next bloc ↓↓
+print_msg_warning "TMP_CWD=${TMP_CWD}"
+printenv
+
+
 # ................................................................................................................
 teamcity_service_msg_blockOpened "Install Libpointmatcher"
 # https://github.com/ethz-asl/libpointmatcher/tree/master
@@ -186,16 +195,18 @@ fi
 print_msg_warning "pwd=$(pwd)"
 tree -agu -L 2
 echo "whoami=$(whoami), groups=$(groups)"
+echo "LPM_LIBPOINTMATCHER_SRC_DOMAIN=${LPM_LIBPOINTMATCHER_SRC_DOMAIN}"
+echo "LPM_LIBPOINTMATCHER_SRC_REPO_NAME=${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
 
-## (CRITICAL) ToDo: on task end >> unmute next bloc ↓↓
-#cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
-#REPO_ABS_PATH=$(pwd)
-#mkdir -p build && cd build
-#
-#
-#tree -agu -L 2 -- "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
-#
-#
+# (CRITICAL) ToDo: on task end >> unmute next bloc ↓↓
+cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
+REPO_ABS_PATH=$(pwd)
+mkdir -p build && cd build
+
+
+tree -agu -L 2 -- "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
+
+
 #teamcity_service_msg_compilationStarted "cmake"
 ## (CRITICAL) ToDo: validate >> REPO_ABS_PATH
 ## (CRITICAL) ToDo: validate >> GENERATE_API_DOC install dir
