@@ -43,10 +43,6 @@ source ./.env
 source ./.env.prompt
 set +o allexport
 
-# ToDo: on task end >> unmute next bloc ↓↓
-print_msg_warning "TMP_CWD=${TMP_CWD}"
-printenv
-
 ## skip GUI dialog by setting everything to default
 #export DEBIAN_FRONTEND=noninteractive
 
@@ -58,6 +54,10 @@ source ./function_library/general_utilities.bash  # ToDo: implement TeamCity ser
 
 ## Set environment variable LPM_IMAGE_ARCHITECTURE
 source ./lpm_utility_script/lpm_export_which_architecture.bash
+
+# ToDo: on task end >> unmute next bloc ↓↓
+print_msg_warning "TMP_CWD=${TMP_CWD}"
+printenv
 
 function print_help_in_terminal() {
   echo -e "\$ ${0} [<optional argument>]
