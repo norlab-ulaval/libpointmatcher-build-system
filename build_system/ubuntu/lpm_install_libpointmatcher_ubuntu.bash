@@ -50,14 +50,10 @@ set +o allexport
 ## import shell functions from Libpointmatcher-build-system utilities library
 source ./function_library/prompt_utilities.bash
 source ./function_library/terminal_splash.bash
-source ./function_library/general_utilities.bash  # ToDo: implement TeamCity service msg logic <-- we are here
+source ./function_library/general_utilities.bash
 
 ## Set environment variable LPM_IMAGE_ARCHITECTURE
 source ./lpm_utility_script/lpm_export_which_architecture.bash
-
-# ToDo: on task end >> unmute next bloc ↓↓
-print_msg_warning "TMP_CWD=${TMP_CWD}"
-printenv
 
 function print_help_in_terminal() {
   echo -e "\$ ${0} [<optional argument>]
@@ -157,13 +153,8 @@ done
 #GENERATE_API_DOC_FLAG=${GENERATE_API_DOC_FLAG}
 #BUILD_SYSTEM_CI_INSTALL=${BUILD_SYSTEM_CI_INSTALL}
 #${MSG_END_FORMAT}"
-##
-##echo "printenv" && printenv # ToDo: on task end >> delete this line ←
-
-
-# ToDo: on task end >> unmute next bloc ↓↓
-print_msg_warning "TMP_CWD=${TMP_CWD}"
-printenv
+#print_msg_warning "TMP_CWD=${TMP_CWD}"
+#echo -e "${MSG_DIMMED_FORMAT} " && printenv | grep -i -e LPM_ && echo -e "${MSG_END_FORMAT} "
 
 
 # ................................................................................................................
@@ -172,10 +163,6 @@ teamcity_service_msg_blockOpened "Install Libpointmatcher"
 
 mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
-
-print_msg_warning "pwd=$(pwd)"
-tree -agu -L 2
-
 
 if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
 
@@ -192,27 +179,16 @@ if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
   fi
 fi
 
-print_msg_warning "pwd=$(pwd)"
-tree -agu -L 2
-echo "whoami=$(whoami), groups=$(groups)"
-echo "LPM_LIBPOINTMATCHER_SRC_DOMAIN=${LPM_LIBPOINTMATCHER_SRC_DOMAIN}"
-echo "LPM_LIBPOINTMATCHER_SRC_REPO_NAME=${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
-
-# (CRITICAL) ToDo: on task end >> unmute next bloc ↓↓
-cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
+cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"/
 REPO_ABS_PATH=$(pwd)
 mkdir -p build && cd build
-
-
-tree -agu -L 2 -- "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"
-
 
 teamcity_service_msg_compilationStarted "cmake"
 # (CRITICAL) ToDo: validate >> REPO_ABS_PATH
 # (CRITICAL) ToDo: validate >> GENERATE_API_DOC install dir
 
 cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo \
-  echo " " && -D BUILD_TESTS=${BUILD_TESTS_FLAG} \
+  -D BUILD_TESTS=${BUILD_TESTS_FLAG} \
   -D GENERATE_API_DOC=${GENERATE_API_DOC_FLAG} \
   ${REPO_ABS_PATH}
 
