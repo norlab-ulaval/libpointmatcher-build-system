@@ -40,8 +40,17 @@ source ./function_library/prompt_utilities.bash
 # =================================================================================================================
 function show_and_execute_docker() {
   local FULL_DOCKER_COMMAND=$1
+#  local FULL_DOCKER_COMMAND=("$@")
+#  local FULL_DOCKER_COMMAND="$*"
   #    local MSG_DIMMED_FORMAT="\033[1;2m"
   #    local MSG_END_FORMAT="\033[0m"
+
+#  # (Priority) ToDo: on task end >> delete next bloc ↓↓
+#  SCRIPT_ARG=("$@")
+#  SCRIPT_ARG_ALT="$*"
+#  print_msg_warning "show_and_execute_docker:"
+#  echo -e ${SCRIPT_ARG[*]}
+#  echo -e ${FULL_DOCKER_COMMAND}
 
   if [ -f /.dockerenv ]; then
     echo

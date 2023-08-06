@@ -31,7 +31,6 @@ services:
     tty: true
     stdin_open: true
   ci_build_and_test:
-#    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci-build-and-test:${LPM_IMAGE_TAG:?err}-job${LPM_JOB_ID}
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci-build-and-test:${LPM_IMAGE_TAG:?err}
     pull_policy: build
     build:
@@ -44,6 +43,7 @@ services:
         BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
         IS_TEAMCITY_RUN: ${IS_TEAMCITY_RUN}
         LIBPOINTMATCHER_VERSION: 'head'
+        LIBPOINTMATCHER_CMAKE_BUILD_TYPE: 'RelWithDebInfo'
         LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
         # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
     init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
@@ -71,6 +71,7 @@ services:
         BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
         IS_TEAMCITY_RUN: ${IS_TEAMCITY_RUN}
         LIBPOINTMATCHER_VERSION: ${LIBPOINTMATCHER_VERSION:?err}
+        LIBPOINTMATCHER_CMAKE_BUILD_TYPE: 'Release'
         LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--compile-test --generate-doc'
         # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
     tty: true

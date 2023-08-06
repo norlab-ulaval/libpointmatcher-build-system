@@ -15,6 +15,8 @@
 #   [--build-system-CI-install]           Set special configuration for CI/CD build system:
 #                                           skip the git clone install step and assume the repository is already
 #                                           pulled and checkout on the desired branch
+#   [--cmake-build-type RelWithDebInfo]         The type of cmake build: None Debug Release RelWithDebInfo MinSizeRel
+#                                           (default to RelWithDebInfo)
 #   [-h, --help]                          Get help
 #
 # Note:
@@ -29,6 +31,7 @@ LIBPOINTMATCHER_VERSION='head'
 BUILD_TESTS_FLAG=FALSE
 GENERATE_API_DOC_FLAG=FALSE
 BUILD_SYSTEM_CI_INSTALL=FALSE
+CMAKE_BUILD_TYPE=RelWithDebInfo
 
 # ....Project root logic...........................................................................................
 TMP_CWD=$(pwd)
@@ -69,6 +72,7 @@ function print_help_in_terminal() {
     --build-system-CI-install             Set special configuration for CI/CD build system:
                                             skip the git clone install step and assume the repository is already
                                             pulled and checkout on the desired branch
+    --cmake-build-type RelWithDebInfo           The type of cmake build: None Debug Release RelWithDebInfo MinSizeRel
     -h, --help                            Get help
 
   "
@@ -88,9 +92,9 @@ print_formated_script_header "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMA
 
 while [ $# -gt 0 ]; do
 
-#    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-#    echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
-#  #  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
+    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+    echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+  #  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
 
   case $1 in
   # ToDo: unit-test
@@ -104,6 +108,12 @@ while [ $# -gt 0 ]; do
   --libpointmatcher-version)
     LIBPOINTMATCHER_VERSION="${2}"
     shift # Remove argument (--libpointmatcher-version)
+    shift # Remove argument value
+    ;;
+  # ToDo: unit-test
+  --cmake-build-type)
+    CMAKE_BUILD_TYPE="${2}"
+    shift # Remove argument (--cmake-build-type)
     shift # Remove argument value
     ;;
   # ToDo: unit-test
@@ -138,9 +148,9 @@ while [ $# -gt 0 ]; do
     ;;
   esac
 
-  #  echo -e "'\$*' after: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-  #  echo -e "after \$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
-  #  echo
+    echo -e "'\$*' after: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+    echo -e "after \$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+    echo
 
 done
 
@@ -187,7 +197,8 @@ teamcity_service_msg_compilationStarted "cmake"
 # (CRITICAL) ToDo: validate >> REPO_ABS_PATH
 # (CRITICAL) ToDo: validate >> GENERATE_API_DOC install dir
 
-cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+
+cmake -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
   -D BUILD_TESTS=${BUILD_TESTS_FLAG} \
   -D GENERATE_API_DOC=${GENERATE_API_DOC_FLAG} \
   ${REPO_ABS_PATH}
