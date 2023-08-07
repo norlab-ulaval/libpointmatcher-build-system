@@ -29,6 +29,8 @@
 #                                     pass them in the docker-compose.yaml if you experience problem.
 #   [--docker-debug-logs]       Set Docker builder log output for debug (i.e.BUILDKIT_PROGRESS=plain)
 #   [--fail-fast]               Exit script at first encountered error
+#   [--ci-sitrep-run]           Override LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE and
+#                                 LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS with there respective _SITREP version
 #   [-h, --help]                Get help
 #
 ## set -e   # Note: use the --fail-fast flag instead
@@ -79,6 +81,8 @@ function print_help_in_terminal() {
       --docker-debug-logs
                           Set Docker builder log output for debug (i.e.BUILDKIT_PROGRESS=plain)
       --fail-fast         Exit script at first encountered error
+      --ci-sitrep-run     Override LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE and
+                            LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS with there respective _SITREP version
 
   \033[1m
     [-- <any docker cmd+arg>]\033[0m                 Any argument passed after '--' will be passed to docker compose as docker
@@ -143,6 +147,16 @@ while [ $# -gt 0 ]; do
   --fail-fast)
     set -e
     shift # Remove argument (--fail-fast)
+    ;;
+  --ci-sitrep-run)
+    shift # Remove argument (--ci-sitrep-run)
+    unset LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE
+    unset LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS
+    LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE=("${LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE_SITREP[@]}")
+    LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS=("${LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS_SITREP[@]}")
+    print_msg "${MSG_DIMMED_FORMAT}ci-sitrep${MSG_END_FORMAT} run environment variable override:
+        - ${MSG_DIMMED_FORMAT}LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE=(${LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE_SITREP[*]})${MSG_END_FORMAT}
+        - ${MSG_DIMMED_FORMAT}LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS=(${LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS_SITREP[*]})${MSG_END_FORMAT}"
     ;;
   -h | --help)
     print_help_in_terminal
@@ -258,16 +272,19 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_MATRIX_LIBPOINTMATCHER_VERSIONS[@]}"; do
           MSG_STATUS="${MSG_ERROR_FORMAT}Fail ${MSG_DIMMED_FORMAT}›"
           MSG_STATUS_TC_TAG="Fail ›"
           BUILD_STATUS_PASS=$DOCKER_EXIT_CODE
+
+          # Fail the build › Appear on the Build Results page
+          echo -e "##teamcity[buildProblem description='BUILD FAIL with docker exit code: ${BUILD_STATUS_PASS}']"
         fi
 
         # Collect image tags exported by lpm_execute_compose.bash
         # Global: Read LPM_IMAGE_TAG env variable exported by lpm_execute_compose.bash
         if [[ ${EACH_CMAKE_BUILD_TYPE} == 'None' ]] || [[ -z ${EACH_CMAKE_BUILD_TYPE} ]]; then
           IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${MSG_STATUS} ${LPM_IMAGE_TAG}")
-          IMAGE_TAG_CRAWLED_TC=("${IMAGE_TAG_CRAWLED[@]}" "${MSG_STATUS_TC_TAG} ${LPM_IMAGE_TAG}")
+          IMAGE_TAG_CRAWLED_TC=("${IMAGE_TAG_CRAWLED_TC[@]}" "${MSG_STATUS_TC_TAG} ${LPM_IMAGE_TAG}")
         else
           IMAGE_TAG_CRAWLED=("${IMAGE_TAG_CRAWLED[@]}" "${MSG_STATUS} ${LPM_IMAGE_TAG} Compile mode: ${EACH_CMAKE_BUILD_TYPE}")
-          IMAGE_TAG_CRAWLED_TC=("${IMAGE_TAG_CRAWLED[@]}" "${MSG_STATUS_TC_TAG} ${LPM_IMAGE_TAG} Compile mode: ${EACH_CMAKE_BUILD_TYPE}")
+          IMAGE_TAG_CRAWLED_TC=("${IMAGE_TAG_CRAWLED_TC[@]}" "${MSG_STATUS_TC_TAG} ${LPM_IMAGE_TAG} Compile mode: ${EACH_CMAKE_BUILD_TYPE}")
         fi
         # .........................................................................................................
 
@@ -315,10 +332,7 @@ done
 print_formated_script_footer 'lpm_execute_compose_over_build_matrix.bash' "${LPM_LINE_CHAR_BUILDER_LVL1}"
 
 # ====TeamCity service message=====================================================================================
-if [[ ${BUILD_STATUS_PASS} != 0 ]]; then
-  # Fail the build › Appear on the Build Results page
-  echo -e "##teamcity[buildProblem description='BUILD FAIL with docker exit code: ${BUILD_STATUS_PASS}']"
-fi
+
 if [[ ${TEAMCITY_VERSION} ]]; then
   # Tag added to the TeamCity build via a service message
   for tc_build_tag in "${IMAGE_TAG_CRAWLED_TC[@]}" ; do
@@ -327,3 +341,4 @@ if [[ ${TEAMCITY_VERSION} ]]; then
 fi
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
+exit $BUILD_STATUS_PASS

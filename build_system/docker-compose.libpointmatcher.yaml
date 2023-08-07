@@ -55,6 +55,31 @@ services:
   ci_build_and_test-arm64v8:
     extends: ci_build_and_test
     platform: "linux/arm64/v8"
+  ci_sitrep_build_and_test_all:
+    image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher-ci_sitrep_build_and_test_all:${LPM_IMAGE_TAG:?err}
+    pull_policy: build
+    build:
+      context: ..
+      dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci_build_and_test
+      no_cache: true   # (CRITICAL) ToDo: on task end >> unmute this line ←
+      args:
+        PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
+        BASE_IMAGE: libpointmatcher-dependencies
+        BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
+        IS_TEAMCITY_RUN: ${IS_TEAMCITY_RUN}
+        LIBPOINTMATCHER_VERSION: ${LIBPOINTMATCHER_VERSION:?err}
+        LIBPOINTMATCHER_CMAKE_BUILD_TYPE: ${LIBPOINTMATCHER_CMAKE_BUILD_TYPE:?err}
+        LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--compile-test'
+        # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
+    init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
+    tty: true
+    stdin_open: true
+  ci_sitrep_build_and_test_all-amd64:
+    extends: ci_sitrep_build_and_test_all
+    platform: "linux/amd64"
+  ci_sitrep_build_and_test_all-arm64v8:
+    extends: ci_sitrep_build_and_test_all
+    platform: "linux/arm64/v8"
   release:
     image: ${LPM_PROJECT_DOCKERHUB:?err}/libpointmatcher:${LPM_IMAGE_TAG:?err}
     container_name: libpointmatcher
