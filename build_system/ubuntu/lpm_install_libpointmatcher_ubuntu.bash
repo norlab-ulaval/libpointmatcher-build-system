@@ -167,8 +167,8 @@ teamcity_service_msg_blockOpened "Install Libpointmatcher"
 
 # (CRITICAL) ToDo: on task end >> delete next bloc ↓↓
 print_msg_warning "DEBUG\n${MSG_WARNING_FORMAT}$(tree -L 2 ${LPM_INSTALLED_LIBRARIES_PATH})${MSG_END_FORMAT}"
-LPM_LIBPOINTMATCHER_SRC_DOMAIN=ethz-asl
-LPM_LIBPOINTMATCHER_SRC_REPO_NAME=libpointmatcher
+#LPM_LIBPOINTMATCHER_SRC_DOMAIN=ethz-asl
+#LPM_LIBPOINTMATCHER_SRC_REPO_NAME=libpointmatcher
 
 mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
