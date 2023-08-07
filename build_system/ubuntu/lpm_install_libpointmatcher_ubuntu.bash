@@ -205,13 +205,42 @@ cmake -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 
 #   -DCMAKE_INSTALL_PREFIX=/usr/local/ \
 
+BUILD_EXIT_CODE=$?
+
 make -j $(nproc)
 sudo make install
+
+INSTALL_EXIT_CODE=$?
 
 teamcity_service_msg_compilationFinished
 teamcity_service_msg_blockClosed
 
-echo " " && print_msg_done "Libpointmatcher installed at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
+SUCCESS_MSG="Libpointmatcher installed successfully at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT}"
+FAILURE_MSG="Libpointmatcher installer exited with error"
+
+if [[ ${IS_TEAMCITY_RUN} == true ]]; then
+  # Report message to build log
+  if [[ ${BUILD_EXIT_CODE} == 0 ]] && [[ ${INSTALL_EXIT_CODE} == 0 ]]; then
+    echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${SUCCESS_MSG}' status='NORMAL']"
+  else
+    if [[ ${BUILD_EXIT_CODE} != 0 ]]; then
+      echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$BUILD_EXIT_CODE' status='ERROR']"
+      exit $BUILD_EXIT_CODE
+    else
+      echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$INSTALL_EXIT_CODE' status='ERROR']"
+      exit $INSTALL_EXIT_CODE
+    fi
+  fi
+else
+  if [[ ${BUILD_EXIT_CODE} == 0 ]] && [[ ${INSTALL_EXIT_CODE} == 0 ]]; then
+    echo " " && print_msg_done "${SUCCESS_MSG}"
+  else
+    print_msg_error "${FAILURE_MSG}"
+  fi
+fi
+
+
+
 print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

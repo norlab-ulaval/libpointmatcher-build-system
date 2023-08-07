@@ -36,14 +36,14 @@ services:
     build:
       context: ..
       dockerfile: ./build_system/ubuntu/Dockerfile.libpointmatcher_ci_build_and_test
-      no_cache: true
+      no_cache: true   # (CRITICAL) ToDo: on task end >> unmute this line ←
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
         BASE_IMAGE: libpointmatcher-dependencies
         BASE_IMAGE_TAG: ${LPM_IMAGE_TAG}
         IS_TEAMCITY_RUN: ${IS_TEAMCITY_RUN}
         LIBPOINTMATCHER_VERSION: 'head'
-        LIBPOINTMATCHER_CMAKE_BUILD_TYPE: 'RelWithDebInfo'
+        LIBPOINTMATCHER_CMAKE_BUILD_TYPE: ${LIBPOINTMATCHER_CMAKE_BUILD_TYPE:?err}
         LIBPOINTMATCHER_INSTALL_SCRIPT_FLAG: '--build-system-CI-install --compile-test'
         # (Priority) ToDo: implement case (ref task NMO-263 LPM build case › compile python binding)
     init: true  # Ref post https://ddanilov.me/how-to-contain-a-crashed-container/
