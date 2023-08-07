@@ -202,31 +202,43 @@ ${MSG_DIMMED_FORMAT}    LPM_MATRIX_OSX_SUPPORTED_VERSIONS=(${FREEZED_LPM_MATRIX_
 # Note: EACH_LPM_VERSION is used for container labeling and to fetch the repo at release tag (todo ref task NMO-252)
 # iceboxed: implement other OS support (ref task NMO-213 OsX arm64-Darwin and NMO-210 OsX x86 CD components)
 for EACH_LPM_VERSION in "${FREEZED_LPM_MATRIX_LIBPOINTMATCHER_VERSIONS[@]}"; do
-  for EACH_CMAKE_BUILD_TYPE in "${FREEZED_LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE[@]}"; do
+  if [[ ${TEAMCITY_VERSION} ]]; then
+    echo -e "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} ${EACH_LPM_VERSION}']"
+  fi
 
-    for EACH_OS_NAME in "${FREEZED_LPM_MATRIX_SUPPORTED_OS[@]}"; do
-      unset CRAWL_OS_VERSIONS
+  for EACH_OS_NAME in "${FREEZED_LPM_MATRIX_SUPPORTED_OS[@]}"; do
+    unset CRAWL_OS_VERSIONS
 
-      if [[ ${EACH_OS_NAME} == 'ubuntu' ]]; then
-        CRAWL_OS_VERSIONS=("${FREEZED_LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS[@]}")
-      elif [[ ${EACH_OS_NAME} == 'osx' ]]; then
-        CRAWL_OS_VERSIONS=("${FREEZED_LPM_MATRIX_OSX_SUPPORTED_VERSIONS[@]}")
-      else
-        print_msg_error_and_exit "${EACH_OS_NAME} not supported!"
+    if [[ ${EACH_OS_NAME} == 'ubuntu' ]]; then
+      CRAWL_OS_VERSIONS=("${FREEZED_LPM_MATRIX_UBUNTU_SUPPORTED_VERSIONS[@]}")
+    elif [[ ${EACH_OS_NAME} == 'osx' ]]; then
+      CRAWL_OS_VERSIONS=("${FREEZED_LPM_MATRIX_OSX_SUPPORTED_VERSIONS[@]}")
+    else
+      print_msg_error_and_exit "${EACH_OS_NAME} not supported!"
+    fi
+
+    if [[ -z ${CRAWL_OS_VERSIONS} ]]; then
+        print_msg_error_and_exit "Can't crawl ${EACH_OS_NAME} supported version array because it's empty!"
+    fi
+
+    if [[ ${TEAMCITY_VERSION} ]]; then
+      echo -e "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} ${EACH_OS_NAME}']"
+    fi
+
+    for EACH_OS_VERSION in "${CRAWL_OS_VERSIONS[@]}"; do
+#      export LPM_JOB_ID=${LPM_JOB_ID}
+
+      if [[ ${TEAMCITY_VERSION} ]]; then
+        echo -e "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} ${EACH_OS_VERSION}']"
       fi
 
-      if [[ -z ${CRAWL_OS_VERSIONS} ]]; then
-          print_msg_error_and_exit "Can't crawl ${EACH_OS_NAME} supported version array because it's empty!"
-      fi
-
-      for EACH_OS_VERSION in "${CRAWL_OS_VERSIONS[@]}"; do
-  #      export LPM_JOB_ID=${LPM_JOB_ID}
+      for EACH_CMAKE_BUILD_TYPE in "${FREEZED_LPM_MATRIX_LIBPOINTMATCHER_CMAKE_BUILD_TYPE[@]}"; do
 
         # shellcheck disable=SC2034
         SHOW_SPLASH_EC='false'
 
         if [[ ${TEAMCITY_VERSION} ]]; then
-          echo -e "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_execute_compose.bash' description='${MSG_DIMMED_FORMAT_TEAMCITY} --libpointmatcher-version ${EACH_LPM_VERSION} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT_TEAMCITY}|n']"
+          echo -e "##teamcity[blockOpened name='${MSG_BASE_TEAMCITY} execute lpm_execute_compose.bash' description='${MSG_DIMMED_FORMAT_TEAMCITY} --libpointmatcher-version ${EACH_LPM_VERSION} --libpointmatcher-cmake-build-type ${EACH_CMAKE_BUILD_TYPE} --os-name ${EACH_OS_NAME} --os-version ${EACH_OS_VERSION} -- ${DOCKER_COMPOSE_CMD_ARGS}${MSG_END_FORMAT_TEAMCITY}|n']"
           echo " "
         fi
 
@@ -262,8 +274,21 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_MATRIX_LIBPOINTMATCHER_VERSIONS[@]}"; do
         fi
 
       done
+
+      if [[ ${TEAMCITY_VERSION} ]]; then
+        echo -e "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} ${EACH_OS_VERSION}']"
+      fi
+
     done
+
+    if [[ ${TEAMCITY_VERSION} ]]; then
+      echo -e "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} ${EACH_OS_NAME}']"
+    fi
+
   done
+  if [[ ${TEAMCITY_VERSION} ]]; then
+    echo -e "##teamcity[blockClosed name='${MSG_BASE_TEAMCITY} ${EACH_LPM_VERSION}']"
+  fi
 done
 
 echo " "

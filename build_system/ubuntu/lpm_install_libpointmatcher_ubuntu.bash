@@ -225,9 +225,11 @@ if [[ ${IS_TEAMCITY_RUN} == true ]]; then
   else
     if [[ ${BUILD_EXIT_CODE} != 0 ]]; then
       echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$BUILD_EXIT_CODE' status='ERROR']"
+      print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
       exit $BUILD_EXIT_CODE
     else
       echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$INSTALL_EXIT_CODE' status='ERROR']"
+      print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
       exit $INSTALL_EXIT_CODE
     fi
   fi
@@ -237,10 +239,10 @@ else
   else
     print_msg_error "${FAILURE_MSG}"
   fi
+  print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 fi
 
 
 
-print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

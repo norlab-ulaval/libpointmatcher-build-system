@@ -25,6 +25,7 @@ set +o allexport
 source ./function_library/prompt_utilities.bash
 
 # ====Begin========================================================================================================
+print_formated_script_header 'lpm_execute_libpointmatcher_unittest.bash' ':'
 
 cd "${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}/build"
 
@@ -33,7 +34,6 @@ if [[ ${IS_TEAMCITY_RUN} == true ]] || [[ ${TEAMCITY_VERSION} ]]; then
   echo -e "##teamcity[testStarted name='gtest' captureStandardOutput='<true/false>']"
 
 else
-  print_formated_script_header 'lpm_execute_libpointmatcher_unittest.bash' '.'
   print_msg "Starting Libpointmatcher GoogleTest unit-test"
 fi
 
@@ -55,7 +55,6 @@ if [[ ${IS_TEAMCITY_RUN} == true ]] || [[ ${TEAMCITY_VERSION} ]]; then
     echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${SUCCESS_MSG}' status='NORMAL']"
   else
     echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$UTEST_EXIT_CODE' status='ERROR']"
-    exit $UTEST_EXIT_CODE
   fi
 
   echo -e "##teamcity[testSuiteFinished name='gtest']"
@@ -63,13 +62,13 @@ else
 
   if [[ ${UTEST_EXIT_CODE} == 0 ]]; then
     print_msg_done "${SUCCESS_MSG}"
-    print_formated_script_footer 'lpm_execute_libpointmatcher_unittest.bash' '.'
   else
     print_msg_error "${FAILURE_MSG}"
-    exit $UTEST_EXIT_CODE
   fi
 
 fi
 
+print_formated_script_footer 'lpm_execute_libpointmatcher_unittest.bash' ':'
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"
+exit $UTEST_EXIT_CODE
