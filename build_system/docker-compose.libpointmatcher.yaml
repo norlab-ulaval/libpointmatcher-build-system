@@ -35,7 +35,7 @@ services:
     pull_policy: build
     build:
       context: ..
-      dockerfile: ubuntu/Dockerfile.libpointmatcher_ci_PR
+      dockerfile: './build_system/ubuntu/Dockerfile.libpointmatcher_ci_PR'
       no_cache: true
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
@@ -59,7 +59,7 @@ services:
     pull_policy: build
     build:
       context: ..
-      dockerfile: ubuntu/Dockerfile.libpointmatcher_ci_SITREP_matrix
+      dockerfile: './build_system/ubuntu/Dockerfile.libpointmatcher_ci_SITREP_matrix'
       no_cache: true
       args:
         PROJECT_HUB: ${LPM_PROJECT_DOCKERHUB}
