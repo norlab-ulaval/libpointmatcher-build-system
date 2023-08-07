@@ -70,10 +70,7 @@ function show_and_execute_docker() {
     else
       if [[ ${IS_TEAMCITY_RUN} == true ]]; then
         # Report message to build log
-        echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$?' status='ERROR']"
-
-        # Fail the build › Appear on the Build Results page
-        echo -e "##teamcity[buildProblem description='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}']"
+        echo -e "##teamcity[message text='${MSG_BASE_TEAMCITY} ${FAILURE_MSG}' errorDetails='$DOCKER_EXIT_CODE' status='ERROR']"
       else
         print_msg_error "${FAILURE_MSG}"
       fi

@@ -92,41 +92,35 @@ print_formated_script_header "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMA
 
 while [ $# -gt 0 ]; do
 
-    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-    echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
-  #  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
+#    echo -e "'\$*' before: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+#    echo -e "\$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+#  #  echo -e "\$arg: ${arg}" # ToDo: on task end >> delete this line ←
 
   case $1 in
-  # ToDo: unit-test
   --install-path)
     unset LPM_INSTALLED_LIBRARIES_PATH
     LPM_INSTALLED_LIBRARIES_PATH="${2}"
     shift # Remove argument (--install-path)
     shift # Remove argument value
     ;;
-  # ToDo: unit-test
   --libpointmatcher-version)
     LIBPOINTMATCHER_VERSION="${2}"
     shift # Remove argument (--libpointmatcher-version)
     shift # Remove argument value
     ;;
-  # ToDo: unit-test
   --cmake-build-type)
     CMAKE_BUILD_TYPE="${2}"
     shift # Remove argument (--cmake-build-type)
     shift # Remove argument value
     ;;
-  # ToDo: unit-test
   --compile-test)
     BUILD_TESTS_FLAG=TRUE
     shift
     ;;
-  # ToDo: unit-test
   --generate-doc)
     GENERATE_API_DOC_FLAG=TRUE
     shift
     ;;
-  # ToDo: unit-test
   --build-system-CI-install)
     BUILD_SYSTEM_CI_INSTALL=TRUE
     shift
@@ -148,9 +142,9 @@ while [ $# -gt 0 ]; do
     ;;
   esac
 
-    echo -e "'\$*' after: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
-    echo -e "after \$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
-    echo
+#    echo -e "'\$*' after: ${MSG_DIMMED_FORMAT}$*${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+#    echo -e "after \$1: ${1}    \$2: $2" # ToDo: on task end >> delete this line ←
+#    echo
 
 done
 
@@ -238,11 +232,15 @@ else
     echo " " && print_msg_done "${SUCCESS_MSG}"
   else
     print_msg_error "${FAILURE_MSG}"
+    print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
+    if [[ ${BUILD_EXIT_CODE} != 0 ]]; then
+      exit $BUILD_EXIT_CODE
+    else
+      exit $INSTALL_EXIT_CODE
+    fi
   fi
-  print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 fi
 
-
-
+print_formated_script_footer "lpm_install_libpointmatcher_ubuntu.bash (${LPM_IMAGE_ARCHITECTURE})" "${LPM_LINE_CHAR_INSTALLER}"
 # ====Teardown=====================================================================================================
 cd "${TMP_CWD}"

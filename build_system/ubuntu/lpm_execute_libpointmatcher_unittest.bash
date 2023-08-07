@@ -31,8 +31,7 @@ cd "${LPM_INSTALLED_LIBRARIES_PATH}/${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}/build"
 
 if [[ ${IS_TEAMCITY_RUN} == true ]] || [[ ${TEAMCITY_VERSION} ]]; then
   echo -e "##teamcity[testSuiteStarted name='gtest']"
-  echo -e "##teamcity[testStarted name='gtest' captureStandardOutput='<true/false>']"
-
+  echo -e "##teamcity[testStarted name='gtest' captureStandardOutput='true']"
 else
   print_msg "Starting Libpointmatcher GoogleTest unit-test"
 fi

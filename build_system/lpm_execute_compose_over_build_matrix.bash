@@ -38,6 +38,7 @@
 # ....Default......................................................................................................
 #LPM_JOB_ID='0'
 DOCKER_COMPOSE_CMD_ARGS='up --build --force-recreate'
+BUILD_STATUS_PASS=0
 
 # ....Project root logic...........................................................................................
 TMP_CWD=$(pwd)
@@ -256,6 +257,7 @@ for EACH_LPM_VERSION in "${FREEZED_LPM_MATRIX_LIBPOINTMATCHER_VERSIONS[@]}"; do
         else
           MSG_STATUS="${MSG_ERROR_FORMAT}Fail ${MSG_DIMMED_FORMAT}›"
           MSG_STATUS_TC_TAG="Fail ›"
+          BUILD_STATUS_PASS=$DOCKER_EXIT_CODE
         fi
 
         # Collect image tags exported by lpm_execute_compose.bash
@@ -313,6 +315,10 @@ done
 print_formated_script_footer 'lpm_execute_compose_over_build_matrix.bash' "${LPM_LINE_CHAR_BUILDER_LVL1}"
 
 # ====TeamCity service message=====================================================================================
+if [[ ${BUILD_STATUS_PASS} != 0 ]]; then
+  # Fail the build › Appear on the Build Results page
+  echo -e "##teamcity[buildProblem description='BUILD FAIL with docker exit code: ${BUILD_STATUS_PASS}']"
+fi
 if [[ ${TEAMCITY_VERSION} ]]; then
   # Tag added to the TeamCity build via a service message
   for tc_build_tag in "${IMAGE_TAG_CRAWLED_TC[@]}" ; do
