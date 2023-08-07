@@ -165,7 +165,10 @@ done
 teamcity_service_msg_blockOpened "Install Libpointmatcher"
 # https://github.com/ethz-asl/libpointmatcher/tree/master
 
-print_msg_warning "DEBUG\n${MSG_WARNING_FORMAT}$(tree -L 2 ${LPM_INSTALLED_LIBRARIES_PATH}/libpointmatcher-build-system)${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+# (CRITICAL) ToDo: on task end >> delete next bloc ↓↓
+print_msg_warning "DEBUG\n${MSG_WARNING_FORMAT}$(tree -L 2 ${LPM_INSTALLED_LIBRARIES_PATH})${MSG_END_FORMAT}"
+LPM_LIBPOINTMATCHER_SRC_DOMAIN=ethz-asl
+LPM_LIBPOINTMATCHER_SRC_REPO_NAME=libpointmatcher
 
 mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
@@ -181,11 +184,24 @@ if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
 
   # (CRITICAL) ToDo: validate (ref task NMO-252 ⚒︎ → Implement pull repo release tag version logic)
   if [[ "${LIBPOINTMATCHER_VERSION}" != 'head' ]]; then
-    git checkout "${LIBPOINTMATCHER_VERSION}"
+    cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"/
+
+    git fetch --tags
+#    --prune-tags --tags
+
+    git tag --list
+
+    # Remove prefix 'v' from version tag
+    GITHUB_TAG="${LIBPOINTMATCHER_VERSION/v/}"
+
+    print_msg_warning "GITHUB_TAG=${GITHUB_TAG}"
+
+    git checkout tags/"${GITHUB_TAG}"
   fi
+else
+  cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"/
 fi
 
-cd "${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}"/
 REPO_ABS_PATH=$(pwd)
 mkdir -p build && cd build
 
@@ -198,6 +214,8 @@ cmake -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
   -D BUILD_TESTS=${BUILD_TESTS_FLAG} \
   -D GENERATE_API_DOC=${GENERATE_API_DOC_FLAG} \
   ${REPO_ABS_PATH}
+
+#  -D CMAKE_INSTALL_PREFIX=${LPM_INSTALLED_LIBRARIES_PATH} \
 
 #   -DCMAKE_INSTALL_PREFIX=/usr/local/ \
 
