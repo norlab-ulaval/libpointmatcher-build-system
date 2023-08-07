@@ -165,13 +165,15 @@ done
 teamcity_service_msg_blockOpened "Install Libpointmatcher"
 # https://github.com/ethz-asl/libpointmatcher/tree/master
 
+print_msg_warning "DEBUG\n${MSG_WARNING_FORMAT}$(tree -L 2 ${LPM_INSTALLED_LIBRARIES_PATH}/libpointmatcher-build-system)${MSG_END_FORMAT}" # ToDo: on task end >> delete this line ←
+
 mkdir -p "${LPM_INSTALLED_LIBRARIES_PATH}"
 cd "${LPM_INSTALLED_LIBRARIES_PATH}"
 
 if [[ ${BUILD_SYSTEM_CI_INSTALL} == FALSE ]]; then
 
-  if [[ -d ${LPM_LIBPOINTMATCHER_SRC_REPO_NAME} ]]; then
-    print_msg_error_and_exit "The specified install directory ${MSG_DIMMED_FORMAT}${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT} at ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${MSG_END_FORMAT} already exist, specify an other one using ${MSG_DIMMED_FORMAT}--install-path </install/dir/path/>${MSG_END_FORMAT}."
+  if [[ -d ${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}/pointmatcher ]]; then
+    print_msg_error_and_exit "${MSG_DIMMED_FORMAT}${LPM_LIBPOINTMATCHER_SRC_REPO_NAME}${MSG_END_FORMAT} source code was already checkout in the specified install directory ${MSG_DIMMED_FORMAT}${LPM_INSTALLED_LIBRARIES_PATH}/${MSG_END_FORMAT}, specify an other one using ${MSG_DIMMED_FORMAT}--install-path </install/dir/path/>${MSG_END_FORMAT}."
   fi
 
   # #git clone https://github.com/ethz-asl/libpointmatcher.git
