@@ -123,12 +123,19 @@ function norlab_splash() {
   local SNOW_FG=97
   local TITLE_FG=97
   local URL_FG=37
-  local SNOW_FORMATTING=2
-  local TITLE_FORMATTING=1
-  local URL_FORMATTING=2
+
+#  local TITLE_FORMATTING="\033[1;${TITLE_FG}m"
+#  local SNOW_FORMATTING="\033[2;${SNOW_FG}m"
+#  local URL_FORMATTING="\033[2;${URL_FG}m"
+
+  local TITLE_FORMATTING="\033[1m"
+#  local SNOW_FORMATTING="\033[2m"
+#  local URL_FORMATTING="\033[2m"
+  local SNOW_FORMATTING="\033[1m"
+  local URL_FORMATTING="\033[1m"
 
   # ToDo: validate
-  local SS='  '
+  local SS='   '
   if [[ ${IS_TEAMCITY_RUN} == true ]] || [[ ${TEAMCITY_VERSION} ]]; then
     SS=''
   fi
@@ -136,20 +143,20 @@ function norlab_splash() {
   echo " "
   echo " "
   echo " "
-  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⠀⢿⣷⣼⣿⣤⣿⡗⠀⠀⠀⠀⠀⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⢀⣤⡀⣿⣿⠀⠀⠉⣿⣿⡿⠁⠀⠀⣿⡟⣀⣤⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠀⠙⣻⣿⣿⣧⠀⠀⢸⣿⠀⠀⢀⣿⣿⣿⣟⠉⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠘⠛⠛⠉⠉⠙⠿⣿⣾⣿⣷⣿⠟⠉⠉⠙⠛⠛⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "···•· ${TITLE} ··•••" "\033[${TITLE_FORMATTING};${TITLE_FG}m" "\033[0m·"
-  echo_centering_str "${SS}⠀⢠⣶⣤⣄⣀⣤⣶⣿⢿⣿⢿⣿⣶⣄⣀⣤⣤⣶⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠀⣨⣿⣿⣿⡟⠁⠀⢸⣿⠀⠀⠉⣿⣿⣿⣯⣀⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠈⠛⠁⣿⣿⢀⠀⣠⣿⣿⣷⡀⠀⠈⣿⣧⠉⠛⢀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⠀⣾⡿⢻⣿⠙⣿⡷⠀⠈⠀⠀⠀⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
-  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "\033[${SNOW_FORMATTING};${SNOW_FG}m" " "
+  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⢿⣷⣼⣿⣤⣿⡗⠀⠀⠀⠀⠀⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⢀⣤⡀⣿⣿⠀⠀⠉⣿⣿⡿⠁⠀⠀⣿⡟⣀⣤⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠀⠙⣻⣿⣿⣧⠀⠀⢸⣿⠀⠀⢀⣿⣿⣿⣟⠉⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠘⠛⠛⠉⠉⠙⠿⣿⣾⣿⣷⣿⠟⠉⠉⠙⠛⠛⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "···•· ${TITLE} ··•••" "${TITLE_FORMATTING}" "\033[0m·"
+  echo_centering_str "${SS}⢠⣶⣤⣄⣀⣤⣶⣿⢿⣿⢿⣿⣶⣄⣀⣤⣤⣶⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠀⣨⣿⣿⣿⡟⠁⠀⢸⣿⠀⠀⠉⣿⣿⣿⣯⣀⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠈⠛⠁⣿⣿⢀⠀⣠⣿⣿⣷⡀⠀⠈⣿⣧⠉⠛⢀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⣾⡿⢻⣿⠙⣿⡷⠀⠈⠀⠀⠀⠀⠀⠀" "${SNOW_FORMATTING}" " "
+  echo_centering_str "${SS}⠀⠀⠀⠀⠀⠀⠀⠀⠘⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "${SNOW_FORMATTING}" " "
   echo " "
-  echo_centering_str "https://norlab.ulaval.ca" "\033[${URL_FORMATTING};${URL_FG}m" " "
-  echo_centering_str "${OPTIONAL_URL}" "\033[${URL_FORMATTING};${URL_FG}m" " "
+  echo_centering_str "https://norlab.ulaval.ca" "${URL_FORMATTING}" " "
+  echo_centering_str "${OPTIONAL_URL}" "${URL_FORMATTING}" " "
   echo " "
   echo " "
 
